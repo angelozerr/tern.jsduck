@@ -1,19 +1,19 @@
 <html>
 
 <head>
-<title>ExtJS 5.0.0 2 Tern</title>
-<script type="text/javascript" src="../api/extjs/5.0.0/_Ext.json.js"></script>
+<title>CKEditor 4.4.1 2 Tern</title>
+<script type="text/javascript" src="../api/ckeditor/4.4.1/_CKEDITOR.command.json.js"></script>
 <script type="text/javascript" src="JSDuckApi2TernDef.js"></script>
 <script type="text/javascript">
-  function extjs2Tern() {
-	var generator = new JSDuckApi2TernDef.Generator("extjs"), ternDef = generator.ternDef;
-	generator.addApi(ExtApi);
+  function ckeditor2Tern() {
+	var generator = new JSDuckApi2TernDef.Generator("ckeditor"), ternDef = generator.ternDef;
+	generator.addApi(CKEditorApi);
     document.getElementById('ternDef').value = JSON.stringify(ternDef, null,
         ' ');
   }
 </script>
 </head>
-<body onload="extjs2Tern();">
+<body onload="ckeditor2Tern();">
 	<textarea id="ternDef" style="width: 100%; height: 100%" spellcheck="false"></textarea>
 </body>
 </html>

@@ -21,11 +21,11 @@ exports.createData = function(type, version, formatJSON) {
   var options = {
     version : version
   };
-  var ternDef = JSDuckApi2TernDef.createDef(type);
+  var generator = new JSDuckApi2TernDef.Generator(type), ternDef = generator.ternDef;
   // loop for Ext*.json
   var basedir = getApiBaseDir(type, version);
   var filenames = fs.readdirSync(basedir);
-  updateTernDef(ternDef, type, version, filenames);
+  updateTernDef(generator, type, version, filenames);
   var defs = formatJSON ? JSON.stringify(ternDef, null, ' ') : JSON.stringify(ternDef);
   return {
     'version' : version,
@@ -63,20 +63,20 @@ exports.generateTernDef = generateTernDef;
 //----------- private function
 
 function generateTernDef(type, version, filenames) {
-  var ternDef = JSDuckApi2TernDef.createDef(type);
-  updateTernDef(ternDef, type, version, filenames);
-  return ternDef;
+  var generator = new JSDuckApi2TernDef.Generator(type);
+  updateTernDef(generator, type, version, filenames);
+  return generator.ternDef;
 }
 
-function updateTernDef(ternDef, type, version, filenames) {
+function updateTernDef(generator, type, version, filenames) {
   if (filenames instanceof Array) {
     filenames.forEach(function(filename) {
-      updateTernDef(ternDef, type, version, filename);
+      updateTernDef(generator, type, version, filename);
     });
   } else {
     if (endsWith(filenames, '.json')) {
       var jsduckApi = loadJSDuckApi(type, version, filenames);
-      JSDuckApi2TernDef.addApi(jsduckApi, ternDef);
+      generator.addApi(jsduckApi);
     }
   }
 }

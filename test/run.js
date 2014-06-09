@@ -24,5 +24,13 @@ exports['test Ext bool Property'] = function() {
   assert.notEqual(undefined, enableFx['!doc']);
 }
 
+exports['test Ext string Function'] = function() {
+    var ternDef = templateUtil.generateTernDef('extjs', "5.0.0", 'Ext.json');
+    var isString =  ternDef['Ext']['isString'];
+    assert.notEqual(undefined, isString);
+    assert.equal('fn(value: ?) -> bool', isString['!type']);
+    assert.notEqual(undefined, isString['!doc']);
+  }
+
 if (module == require.main)
   require('test').run(exports)
