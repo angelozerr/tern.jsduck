@@ -135,14 +135,16 @@
 				}
 				}
 				fnType += ')';
-				if (isMemberChainable(member)) {
-					fnType += ' -> !this';
-				} else if (!isConstructor && memberReturn) {
+				if (!isConstructor) {
+				    if (memberReturn) {
 					var returnType = getTernType(memberReturn);
 					if (!returnType) returnType = '?';
 					fnType += ' -> ';
 					fnType += returnType;
+				    } else if (isMemberChainable(member)) {
+					fnType += ' -> !this';
 				    }
+				}				
 				return fnType;
 			    }
 			    return null;
