@@ -6,7 +6,7 @@
 <script type="text/javascript" src="JSDuckApi2TernDef.js"></script>
 <script type="text/javascript">
   function extjs2Tern() {
-	var options = {doc: true};
+	var options = {doc: true, private: true};
 	var ternDef = JSDuckApi2TernDef.createDef("extjs");
     JSDuckApi2TernDef.addApi(ExtApi, ternDef, options);
     document.getElementById('ternDef').value = JSON.stringify(ternDef, null,
