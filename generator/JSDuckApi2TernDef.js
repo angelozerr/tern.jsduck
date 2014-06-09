@@ -4,8 +4,8 @@
     if (typeof define == "function" && define.amd)
 	return define([ "exports" ], mod); // AMD
     mod(root.JSDuckApi2TernDef || (root.JSDuckApi2TernDef = {})); // Plain
-    // browser
-    // env
+								    // browser
+								    // env
 })
 	(
 		this,
@@ -47,6 +47,13 @@
 		    function visitMembers(jsduckApi, ternDef, options) {
 			var members = jsduckApi.members;
 			if (members) {
+			    var constructorMember = getConstructorMember(members);
+			    if (constructorMember) {
+				var ternMember = getTernClass(jsduckApi.name, ternDef);
+				var ternType = getTernType(constructorMember, true);
+				if (ternType)
+				    ternMember["!type"] = ternType;		
+			    }
 			    for (var i = 0; i < members.length; i++) {
 				var member = members[i];
 				if (!isMemberPrivate(member)
@@ -60,31 +67,35 @@
 			    }
 			}
 		    }
+		    
+		    function getConstructorMember(members) {
+			for (var i = 0; i < members.length; i++) {
+			    var member = members[i];
+			    if (member.name === 'constructor') {
+				return member;
+			    }
+			}
+		    }
 
 		    /**
 		     * Visit member.
 		     */
-		    function visitMember(member, jsduckApi, ternDef) {
-			var ternClass = getTernClassOrPrototype(member, jsduckApi, ternDef);
-			/*
-			 * switch (member.tagname) { case 'property': var
-			 * ternProperty = {}; ternClass[member.name] =
-			 * ternProperty; var ternType = getTernType(member); if
-			 * (ternType) ternProperty["!type"] = ternType; return
-			 * ternProperty; case 'method': var ternMethod = {};
-			 * ternClass[member.name] = ternMethod; var ternType =
-			 * getTernType(null, member.params); if (ternType)
-			 * ternMethod["!type"] = ternType; return ternMethod;
-			 * break; case 'event': break; case 'cfg': break; }
-			 */
-			var ternMember = {};
+		    function visitMember(member, jsduckApi, ternDef) {			
+			if (member.name != 'constructor') {			    	    
+			    var ternClass = getTernClassOrPrototype(member, jsduckApi, ternDef);
+			    var ternMember = {};
 			    ternClass[member.name] = ternMember;
 			    var ternType = getTernType(member);
 			    if (ternType)
 				ternMember["!type"] = ternType;
 			    return ternMember;
+			}
 		    }
 
+		    function isMemberChainable(member) {
+			return getMemberProperty(member, "chainable");
+		    }
+		    
 		    function isMemberPrivate(member) {
 			return getMemberProperty(member, "private");
 		    }
@@ -100,7 +111,7 @@
 			    return member.autodetected[name];
 		    }
 
-		    function getTernType(member) {
+		    function getTernType(member, isConstructor) {
 			var memberType = member.type, memberParams = member.params, memberReturn = member.return;
 			if (!memberType) {
 			    if (memberParams || memberReturn) {
@@ -124,7 +135,9 @@
 				}
 				}
 				fnType += ')';
-				    if (memberReturn) {
+				if (isMemberChainable(member)) {
+					fnType += ' -> !this';
+				} else if (!isConstructor && memberReturn) {
 					var returnType = getTernType(memberReturn);
 					if (!returnType) returnType = '?';
 					fnType += ' -> ';
