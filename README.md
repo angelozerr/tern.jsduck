@@ -13,7 +13,7 @@ from their Javascript sources by using Api Ext.json, CKEDITOR.json generated wit
 
 ## What is tern plugin?
 
-Tern is a stand-alone code-analysis engine for JavaScript. It is intended to be used with a code editor plugin to enhance the editor's support for intelligent JavaScript editing.
+Tern is a stand-alone code-analysis engine for JavaScript. It is intended to be used with a code editor plugin (Vim, Emacs, Sublime, Eclipse IDE (see [tern.java](https://github.com/angelozerr/tern.java))) to enhance the editor's support for intelligent JavaScript editing.
 
 Here screenshot with completion inside Eclipse IDE : 
 
