@@ -19,11 +19,11 @@ Here screenshot with completion inside Eclipse IDE :
 
  * with the ExtJS Tern plugin
  
-[![ExtJS](https://github.com/angelozerr/tern.jsduck/wiki/images/EclipseIDE_ExtJSCompletion.png)]
+![ExtJS](https://github.com/angelozerr/tern.jsduck/wiki/images/EclipseIDE_ExtJSCompletion.png)
 
  * with the CKEditor Tern plugin
  
-[![CKEditor](https://github.com/angelozerr/tern.jsduck/wiki/images/EclipseIDE_CKEditorCompletion.png)]
+![CKEditor](https://github.com/angelozerr/tern.jsduck/wiki/images/EclipseIDE_CKEditorCompletion.png)
 
 ## Demo
 
