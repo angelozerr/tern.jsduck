@@ -27,10 +27,11 @@ Here screenshot with completion inside Eclipse IDE :
 
 ## Demo
 
-You can see online demo at :
+You can see online demo (CodeMirror is used):
 
-TODO
- 
+ * with [extjs_5.0.0.js](https://github.com/angelozerr/tern.jsduck/blob/master/plugin/extjs_5.0.0.js) tern plugin [here](http://codemirror-java.opensagres.eu.cloudbees.net/codemirror-javascript/demo/extjs.html).
+ * with [ckeditor_4.4.1.js](https://github.com/angelozerr/tern.jsduck/blob/master/plugin/ckeditor_4.4.1.js) tern plugin [here](http://codemirror-java.opensagres.eu.cloudbees.net/codemirror-javascript/demo/ckeditor.html).
+
 ## How it works? 
 
 ### Ext*.json
