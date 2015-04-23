@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>CKEditor 4.4.1 Tern Demo</title>
+    <title>CKEditor 4.4.7 Tern Demo</title>
     
     <!-- CodeMirror -->
     <link rel="stylesheet" href="codemirror/lib/codemirror.css">
@@ -18,16 +18,16 @@
     <script src="codemirror/mode/javascript/javascript.js"></script>    
 
   <!-- Tern JS -->
-  <script src="ternjs/acorn/acorn.js"></script>
-  <script src="ternjs/acorn/acorn_loose.js"></script>
-  <script src="ternjs/acorn/util/walk.js"></script>
+  <script src="ternjs/acorn/dist/acorn.js"></script>
+  <script src="ternjs/acorn/dist/acorn_loose.js"></script>
+  <script src="ternjs/acorn/dist/walk.js"></script>
   <script src="ternjs/tern/lib/signal.js"></script>
   <script src="ternjs/tern/lib/tern.js"></script>
   <script src="ternjs/tern/lib/def.js"></script>
   <script src="ternjs/tern/lib/comment.js"></script>
   <script src="ternjs/tern/lib/infer.js"></script>
   
-  <script src="../plugin/ckeditor_4.4.1.js"></script>
+  <script src="../plugin/ckeditor_4.4.7.js"></script>
   
   <!-- Official CodeMirror Tern addon -->
   <script src="codemirror/addon/tern/tern.js"></script>   
@@ -59,7 +59,7 @@
   </head>
   <body>
     
-    <h1>Demo with CKEditor 4.4.1 Tern plugin </h1>
+    <h1>Demo with CKEditor 4.4.7 Tern plugin </h1>
 	<p>See <a href="https://github.com/angelozerr/tern.jsduck">https://github.com/angelozerr/tern.jsduck</a> for more infos.</p>  
     <form><textarea id="code" name="code">CKEDITOR. // here Ctrl+Space
 </textarea></form>
@@ -96,7 +96,7 @@
         },
         gutters: ["CodeMirror-linenumbers"],
     	textHover: {delay:300},
-    	ternWith: { plugins: {"ckeditor_4.4.1" : {}}, defs:["browser"]}
+    	ternWith: { plugins: {"ckeditor_4.4.7" : {}}, defs:["browser"]}
       });
     </script>
     

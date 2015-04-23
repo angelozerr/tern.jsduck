@@ -4,7 +4,7 @@ module.exports = function(grunt) {
   require("./tasks/generate-tern.extjs_4.2.1");
   require("./tasks/generate-tern.extjs_5.0.0");
   // CKEditor
-  require("./tasks/generate-tern.ckeditor_4.4.1");
+  require("./tasks/generate-tern.ckeditor_4.4.7");
   
   var templateUtil = require("./tasks/template-util");
 

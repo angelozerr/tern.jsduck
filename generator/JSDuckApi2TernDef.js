@@ -42,14 +42,15 @@
 		    // -------------- Visit Members
 
 		    /**
-		     * Visit members.
-		     */
+             * Visit members.
+             */
 		    function visitMembers(jsduckApi, ternDef, options) {
 			var members = jsduckApi.members;
 			if (members) {
 			    var constructorMember = getConstructorMember(members);
 			    if (constructorMember) {
 				var ternMember = getTernClass(jsduckApi.name, ternDef);
+				ternMember = ternMember.prototype = {};
 				var ternType = getTernType(constructorMember, true);
 				if (ternType)
 				    ternMember["!type"] = ternType;		
@@ -78,8 +79,8 @@
 		    }
 
 		    /**
-		     * Visit member.
-		     */
+             * Visit member.
+             */
 		    function visitMember(member, jsduckApi, ternDef) {			
 			if (member.name != 'constructor') {			    	    
 			    var ternClass = getTernClassOrPrototype(member, jsduckApi, ternDef);
@@ -100,8 +101,10 @@
 			return getMemberProperty(member, "private");
 		    }
 
-		    function isMemberStatic(member) {
-			return getMemberProperty(member, "static");
+		    function isMemberStatic(member, jsduckApi) {
+		      if (member["static"] == true) return true;
+		      if (member["static"] != false) return jsduckApi.singleton;
+		      return false;
 		    }
 
 		    function getMemberProperty(member, name) {
@@ -120,7 +123,7 @@
 				if (memberParams) {
 				for (var i = 0; i < memberParams.length; i++) {
 				    var param = memberParams[i], name = param.name, optional = param.optional, type = getTernType(
-					    param.type, null)
+					    param, null)
 				    if (i > 0)
 					fnType += ', ';
 				    fnType += name;
@@ -149,27 +152,46 @@
 			    }
 			    return null;
 			}
-			switch (memberType) {
-			case 'String':
-			    return 'string';
-			case 'Boolean':
-			    return 'bool';
-			case 'Number':
-			    return 'number';
-			}
-			// console.log(memberType)
+			return getTernTypesFromString(memberType);
 		    }
 
+		    function getTernTypesFromString(type) {
+		      var ternType = null, types = type.split("/");
+		      for (var i = 0; i < types.length; i++) {
+                var t = getTernTypeFromString(types[i]);
+                if (t) {
+                  if (ternType) {ternType+="|"} else {ternType = "";}
+                  ternType+=t;
+                }
+              }
+		      return ternType;		      
+		    }
+		    
+		    function getTernTypeFromString(type) {
+		      switch (type.toLowerCase().trim()) {
+	            case 'string':
+	                return 'string';
+	            case 'boolean':
+	                return 'bool';
+	            case 'number':
+	                return 'number';
+	            case 'object':
+                  return '?';
+	            case 'array':
+                  return '[?]';                  
+	            case 'function':
+                  return 'fn()';	                
+	             default:
+	               if (type.charAt(0) == "'") return "string";
+	               if (type.length > 2 && type.substring(type.length -2, type.length) == "[]") return "[" + getTernTypeFromString(type.substring(0, type.length -2)) + "]";
+	               return "+" + type;
+	            } 
+		    }
+		    
 		    function getTernClassOrPrototype(member, jsduckApi, ternDef) {
 			var ternClass = getTernClass(member.owner, ternDef);
-			if (jsduckApi.singleton) {
-			    return ternClass;
-			}
-			/*
-			 * if (isMemberStatic(member)) return ternClass;
-			 */
-			if (!ternClass.prototype)
-			    ternClass.prototype = {};
+			if (isMemberStatic(member, jsduckApi)) return ternClass;
+			if (!ternClass.prototype) ternClass.prototype = {};
 			return ternClass.prototype;
 		    }
 
