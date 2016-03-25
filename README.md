@@ -46,11 +46,15 @@ Once you have generated jsduck *.json files (for instance see [api/extjs/5.0.0](
 
  * install grunt client:
 
-	npm install -g grunt-cli
+```text
+npm install -g grunt-cli
+```
 
  * go at tern.jsduck folder and do
- 
-	grunt
+
+```text 
+grunt
+```
 	
 This command generates tern plugins:
 
@@ -63,7 +67,7 @@ File `plugin/extjs_5.0.0.js` created.
 
 The grunt task 	uses template [generator/extjs.js.tpl](https://github.com/angelozerr/tern.jsduck/blob/master/generator/extjs.js.tpl) and merge it with generated JSON Type definitions.
 
-[generator/ExtJSApi2TernDef_5.0.0.html](If you wish to debug the generator with a browserFF, etc), you can open the HTML file https://github.com/angelozerr/tern.jsduck/blob/master/generator/ExtJSApi2TernDef_5.0.0.html)
+If you wish to debug the generator with a browser(Chrome, FF, etc), you can open the HTML file [generator/ExtJSApi2TernDef_5.0.0.html](https://github.com/angelozerr/tern.jsduck/blob/master/generator/ExtJSApi2TernDef_5.0.0.html)
 
 ## Structure
 
