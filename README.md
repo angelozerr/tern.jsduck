@@ -39,6 +39,31 @@ You can see online demo (CodeMirror is used):
 Generate Ext*.json from extjs sources by using [jsduck](https://github.com/senchalabs/jsduck)
 
 	jsduck --verbose --output ext-5.0.0-json/ ext-5.0.0/src --ignore-global --export=full --encoding=iso-8859-1
+	
+### jsduck Ext*.json -> Tern defs
+
+Once you have generated jsduck *.json files (for instance see [api/extjs/5.0.0](https://github.com/angelozerr/tern.jsduck/tree/master/api/extjs/5.0.0)) you can generate tern plugin:
+
+ * install grunt client:
+
+	npm install -g grunt-cli
+
+ * go at tern.jsduck folder and do
+ 
+	grunt
+	
+This command generates tern plugins:
+
+```text
+...
+Running "template:generate-tern.extjs_5.0.0" (template) task
+File `plugin/extjs_5.0.0.js` created.
+...
+```
+
+The grunt task 	uses template [generator/extjs.js.tpl](https://github.com/angelozerr/tern.jsduck/blob/master/generator/extjs.js.tpl) and merge it with generated JSON Type definitions.
+
+[generator/ExtJSApi2TernDef_5.0.0.html](If you wish to debug the generator with a browserFF, etc), you can open the HTML file https://github.com/angelozerr/tern.jsduck/blob/master/generator/ExtJSApi2TernDef_5.0.0.html)
 
 ## Structure
 
