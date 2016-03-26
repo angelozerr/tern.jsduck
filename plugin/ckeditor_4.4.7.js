@@ -16,17 +16,12 @@
 
   var defs = {
  "!name": "ckeditor",
- "!define": {
-   "A": {
-     
-   }
-   
- },
+ "!define": {},
  "CKEDITOR": {
   "command": {
    "!doc": "<p>Represents a command that can be executed on an editor instance.</p>\n\n<pre><code>var command = new <a href=\"#!/api/CKEDITOR.command\" rel=\"CKEDITOR.command\" class=\"docClass\">CKEDITOR.command</a>( editor, {\n    exec: function( editor ) {\n        alert( editor.document.getBody().getHtml() );\n    }\n} );\n</code></pre>\n",
+   "!type": "fn(editor: +CKEDITOR.editor, commandDefinition: +CKEDITOR.commandDefinition)",
    "prototype": {
-    "!type": "fn(editor: +CKEDITOR.editor, commandDefinition: +CKEDITOR.commandDefinition)",
     "contextSensitive": {
      "!type": "bool",
      "!doc": "<p>Indicates that this command is sensible to the selection context.\nIf <code>true</code>, the <a href=\"#!/api/CKEDITOR.command-method-refresh\" rel=\"CKEDITOR.command-method-refresh\" class=\"docClass\">refresh</a> method will be\ncalled for this command on the <a href=\"#!/api/CKEDITOR.editor-event-selectionChange\" rel=\"CKEDITOR.editor-event-selectionChange\" class=\"docClass\">CKEDITOR.editor.selectionChange</a> event.</p>\n"
@@ -83,7 +78,6 @@
   },
   "event": {
    "prototype": {
-    "!type": "fn()",
     "capture": {
      "!type": "fn() -> !this",
      "!doc": "<p>Register event handler under the capturing stage on supported target.</p>\n"
@@ -122,6 +116,7 @@
     }
    },
    "!doc": "<p>Creates an event class instance. This constructor is rarely used, being\nthe <a href=\"#!/api/CKEDITOR.event-static-method-implementOn\" rel=\"CKEDITOR.event-static-method-implementOn\" class=\"docClass\">implementOn</a> function used in class prototypes directly\ninstead.</p>\n\n<p>This is a base class for classes and objects that require event\nhandling features.</p>\n\n<p>Do not confuse this class with <a href=\"#!/api/CKEDITOR.dom.event\" rel=\"CKEDITOR.dom.event\" class=\"docClass\">CKEDITOR.dom.event</a> which is\ninstead used for DOM events. The <a href=\"#!/api/CKEDITOR.event\" rel=\"CKEDITOR.event\" class=\"docClass\">CKEDITOR.event</a> class implements the\ninternal event system used by the CKEditor to fire API related events.</p>\n",
+   "!type": "fn()",
    "useCapture": {
     "!type": "bool",
     "!doc": "<p>@todo</p>\n"
@@ -343,8 +338,8 @@
   "dom": {
    "comment": {
     "!doc": "<p>Represents a DOM comment node.</p>\n\n<pre><code>var nativeNode = document.createComment( 'Example' );\nvar comment = new <a href=\"#!/api/CKEDITOR.dom.comment\" rel=\"CKEDITOR.dom.comment\" class=\"docClass\">CKEDITOR.dom.comment</a>( nativeNode );\n\nvar comment = new <a href=\"#!/api/CKEDITOR.dom.comment\" rel=\"CKEDITOR.dom.comment\" class=\"docClass\">CKEDITOR.dom.comment</a>( 'Example' );\n</code></pre>\n",
+    "!type": "fn(comment: ?|string, ownerDocument?: +CKEDITOR.dom.document)",
     "prototype": {
-     "!type": "fn(comment: ?|string, ownerDocument?: +CKEDITOR.dom.document)",
      "type": {
       "!type": "number",
       "!doc": "<p>The node type. This is a constant value set to <a href=\"#!/api/CKEDITOR-property-NODE_COMMENT\" rel=\"CKEDITOR-property-NODE_COMMENT\" class=\"docClass\">CKEDITOR.NODE_COMMENT</a>.</p>\n"
@@ -357,7 +352,6 @@
    },
    "domObject": {
     "prototype": {
-     "!type": "fn(nativeDomObject: ?)",
      "$": {
       "!type": "?",
       "!doc": "<p>The native DOM object represented by this class instance.</p>\n\n<pre><code>var element = new <a href=\"#!/api/CKEDITOR.dom.element\" rel=\"CKEDITOR.dom.element\" class=\"docClass\">CKEDITOR.dom.element</a>( 'span' );\nalert( element.$.nodeType ); // '1'\n</code></pre>\n"
@@ -395,11 +389,11 @@
       "!doc": "<p>Sets a data slot value for this object. These values are shared by all\ninstances pointing to that same DOM object.</p>\n\n<p><strong>Note:</strong> The created data slot is only guarantied to be available on this unique dom node,\nthus any wish to continue access it from other element clones (either created by\nclone node or from <code>innerHtml</code>) will fail, for such usage, please use\n<a href=\"#!/api/CKEDITOR.dom.element-method-setAttribute\" rel=\"CKEDITOR.dom.element-method-setAttribute\" class=\"docClass\">CKEDITOR.dom.element.setAttribute</a> instead.</p>\n\n<p><strong>Note</strong>: This method does not work on text nodes prior to Internet Explorer 9.</p>\n\n<pre><code>var element = new <a href=\"#!/api/CKEDITOR.dom.element\" rel=\"CKEDITOR.dom.element\" class=\"docClass\">CKEDITOR.dom.element</a>( 'span' );\nelement.setCustomData( 'hasCustomData', true );\n</code></pre>\n"
      }
     },
-    "!doc": "<p>Represents a DOM object. This class is not intended to be used directly. It\nserves as the base class for other classes representing specific DOM\nobjects.</p>\n"
+    "!doc": "<p>Represents a DOM object. This class is not intended to be used directly. It\nserves as the base class for other classes representing specific DOM\nobjects.</p>\n",
+    "!type": "fn(nativeDomObject: ?)"
    },
    "node": {
     "prototype": {
-     "!type": "fn(domNode: ?)",
      "appendTo": {
       "!type": "fn(element: +CKEDITOR.dom.element) -> +CKEDITOR.dom.element",
       "!doc": "<p>Makes this node a child of another element.</p>\n\n<pre><code>var p = new <a href=\"#!/api/CKEDITOR.dom.element\" rel=\"CKEDITOR.dom.element\" class=\"docClass\">CKEDITOR.dom.element</a>( 'p' );\nvar strong = new <a href=\"#!/api/CKEDITOR.dom.element\" rel=\"CKEDITOR.dom.element\" class=\"docClass\">CKEDITOR.dom.element</a>( 'strong' );\nstrong.appendTo( p );\n\n// Result: '&lt;p&gt;&lt;strong&gt;&lt;/strong&gt;&lt;/p&gt;'.\n</code></pre>\n"
@@ -509,12 +503,13 @@
       "!doc": "<p>@todo</p>\n"
      }
     },
-    "!doc": "<p>Base class for classes representing DOM nodes. This constructor may return\nan instance of a class that inherits from this class, like\n<a href=\"#!/api/CKEDITOR.dom.element\" rel=\"CKEDITOR.dom.element\" class=\"docClass\">CKEDITOR.dom.element</a> or <a href=\"#!/api/CKEDITOR.dom.text\" rel=\"CKEDITOR.dom.text\" class=\"docClass\">CKEDITOR.dom.text</a>.</p>\n"
+    "!doc": "<p>Base class for classes representing DOM nodes. This constructor may return\nan instance of a class that inherits from this class, like\n<a href=\"#!/api/CKEDITOR.dom.element\" rel=\"CKEDITOR.dom.element\" class=\"docClass\">CKEDITOR.dom.element</a> or <a href=\"#!/api/CKEDITOR.dom.text\" rel=\"CKEDITOR.dom.text\" class=\"docClass\">CKEDITOR.dom.text</a>.</p>\n",
+    "!type": "fn(domNode: ?)"
    },
    "document": {
     "!doc": "<p>Represents a DOM document.</p>\n\n<pre><code>var document = new <a href=\"#!/api/CKEDITOR.dom.document\" rel=\"CKEDITOR.dom.document\" class=\"docClass\">CKEDITOR.dom.document</a>( document );\n</code></pre>\n",
+    "!type": "fn(domDocument: ?)",
     "prototype": {
-     "!type": "fn(domDocument: ?)",
      "type": {
       "!type": "number",
       "!doc": "<p>The node type. This is a constant value set to <a href=\"#!/api/CKEDITOR-property-NODE_DOCUMENT\" rel=\"CKEDITOR-property-NODE_DOCUMENT\" class=\"docClass\">CKEDITOR.NODE_DOCUMENT</a>.</p>\n"
@@ -595,8 +590,8 @@
    },
    "documentFragment": {
     "!doc": "<p>DocumentFragment is a \"lightweight\" or \"minimal\" Document object. It is\ncommonly used to extract a portion of a document's tree or to create a new\nfragment of a document. Various operations may take DocumentFragment objects\nas arguments and results in all the child nodes of the DocumentFragment being\nmoved to the child list of this node.</p>\n",
+    "!type": "fn(nodeOrDoc: ?)",
     "prototype": {
-     "!type": "fn(nodeOrDoc: ?)",
      "type": {
       "!type": "number",
       "!doc": "<p>The node type. This is a constant value set to <a href=\"#!/api/CKEDITOR-property-NODE_DOCUMENT_FRAGMENT\" rel=\"CKEDITOR-property-NODE_DOCUMENT_FRAGMENT\" class=\"docClass\">CKEDITOR.NODE_DOCUMENT_FRAGMENT</a>.</p>\n"
@@ -609,8 +604,8 @@
    },
    "element": {
     "!doc": "<p>Represents a DOM element.</p>\n\n<pre><code>// Create a new &lt;span&gt; element.\nvar element = new <a href=\"#!/api/CKEDITOR.dom.element\" rel=\"CKEDITOR.dom.element\" class=\"docClass\">CKEDITOR.dom.element</a>( 'span' );\n\n// Create an element based on a native DOM element.\nvar element = new <a href=\"#!/api/CKEDITOR.dom.element\" rel=\"CKEDITOR.dom.element\" class=\"docClass\">CKEDITOR.dom.element</a>( document.getElementById( 'myId' ) );\n</code></pre>\n",
+    "!type": "fn(element: ?|string, ownerDocument?: +CKEDITOR.dom.document)",
     "prototype": {
-     "!type": "fn(element: ?|string, ownerDocument?: +CKEDITOR.dom.document)",
      "type": {
       "!type": "number",
       "!doc": "<p>The node type. This is a constant value set to <a href=\"#!/api/CKEDITOR-property-NODE_ELEMENT\" rel=\"CKEDITOR-property-NODE_ELEMENT\" class=\"docClass\">CKEDITOR.NODE_ELEMENT</a>.</p>\n"
@@ -927,8 +922,8 @@
    },
    "elementPath": {
     "!doc": "<p>Retrieve the list of nodes walked from the start node up to the editable element of the editor.</p>\n",
+    "!type": "fn(startNode: +CKEDITOR.dom.element, root: +CKEDITOR.dom.element)",
     "prototype": {
-     "!type": "fn(startNode: +CKEDITOR.dom.element, root: +CKEDITOR.dom.element)",
      "block": {
       "!type": "+CKEDITOR.dom.element",
       "!doc": "<p>First non-empty block element which:</p>\n\n<ul>\n<li>is not a <a href=\"#!/api/CKEDITOR.dtd-property-S-blockLimit\" rel=\"CKEDITOR.dtd-property-S-blockLimit\" class=\"docClass\">CKEDITOR.dtd.$blockLimit</a>,</li>\n<li>or is a <code>div</code> which does not contain block elements and is not a <code>root</code>.</li>\n</ul>\n\n\n<p>This means a first, splittable block in elements path.</p>\n"
@@ -969,8 +964,8 @@
    },
    "event": {
     "!doc": "<p>Represents a native DOM event object.</p>\n",
+    "!type": "fn(domEvent: ?)",
     "prototype": {
-     "!type": "fn(domEvent: ?)",
      "$": {
       "!type": "?",
       "!doc": "<p>The native DOM event object represented by this class instance.</p>\n"
@@ -1007,8 +1002,8 @@
    },
    "iterator": {
     "!doc": "<p>Represents the iterator class. It can be used to iterate\nover all elements (or even text nodes in case of <a href=\"#!/api/CKEDITOR.dom.iterator-property-enlargeBr\" rel=\"CKEDITOR.dom.iterator-property-enlargeBr\" class=\"docClass\">enlargeBr</a> set to <code>false</code>)\nwhich establish \"paragraph-like\" spaces within the passed range.</p>\n\n<pre><code>// &lt;h1&gt;[foo&lt;/h1&gt;&lt;p&gt;bar]&lt;/p&gt;\nvar iterator = range.createIterator();\niterator.getNextParagraph(); // h1 element\niterator.getNextParagraph(); // p element\n\n// &lt;ul&gt;&lt;li&gt;[foo&lt;/li&gt;&lt;li&gt;bar]&lt;/li&gt;\n// With enforceRealBlocks set to false the iterator will return two list item elements.\n// With enforceRealBlocks set to true the iterator will return two paragraphs and the DOM will be changed to:\n// &lt;ul&gt;&lt;li&gt;&lt;p&gt;foo&lt;/p&gt;&lt;/li&gt;&lt;li&gt;&lt;p&gt;bar&lt;/p&gt;&lt;/li&gt;\n</code></pre>\n",
+    "!type": "fn(range: +CKEDITOR.dom.range)",
     "prototype": {
-     "!type": "fn(range: +CKEDITOR.dom.range)",
      "activeFilter": {
       "!type": "+CKEDITOR.filter",
       "!doc": "<p>Iterator's active filter. It is set by the <a href=\"#!/api/CKEDITOR.dom.iterator-method-getNextParagraph\" rel=\"CKEDITOR.dom.iterator-method-getNextParagraph\" class=\"docClass\">getNextParagraph</a> method\nwhen it enters a nested editable.</p>\n"
@@ -1043,8 +1038,8 @@
    },
    "nodeList": {
     "!doc": "<p>Represents a list of <a href=\"#!/api/CKEDITOR.dom.node\" rel=\"CKEDITOR.dom.node\" class=\"docClass\">CKEDITOR.dom.node</a> objects.\nIt's a wrapper for native nodes list.</p>\n\n<pre><code>var nodeList = CKEDITOR.document.getBody().getChildren();\nalert( nodeList.count() ); // number [0;N]\n</code></pre>\n",
+    "!type": "fn(nativeList: ?)",
     "prototype": {
-     "!type": "fn(nativeList: ?)",
      "count": {
       "!type": "fn() -> number",
       "!doc": "<p>Get count of nodes in this list.</p>\n"
@@ -1057,8 +1052,8 @@
    },
    "range": {
     "!doc": "<p>Represents a delimited piece of content in a DOM Document.\nIt is contiguous in the sense that it can be characterized as selecting all\nof the content between a pair of boundary-points.</p>\n\n<p>This class shares much of the W3C\n<a href=\"http://www.w3.org/TR/DOM-Level-2-Traversal-Range/ranges.html\">Document Object Model Range</a>\nideas and features, adding several range manipulation tools to it, but it's\nnot intended to be compatible with it.</p>\n\n<pre><code>// Create a range for the entire contents of the editor document body.\nvar range = new <a href=\"#!/api/CKEDITOR.dom.range\" rel=\"CKEDITOR.dom.range\" class=\"docClass\">CKEDITOR.dom.range</a>( editor.document );\nrange.selectNodeContents( editor.document.getBody() );\n// Delete the contents.\nrange.deleteContents();\n</code></pre>\n\n<p>Usually you will want to work on a ranges rooted in the editor's <a href=\"#!/api/CKEDITOR.editable\" rel=\"CKEDITOR.editable\" class=\"docClass\">editable</a>\nelement. Such ranges can be created with a shorthand method &ndash; <a href=\"#!/api/CKEDITOR.editor-method-createRange\" rel=\"CKEDITOR.editor-method-createRange\" class=\"docClass\">editor.createRange</a>.</p>\n\n<pre><code>var range = editor.createRange();\nrange.root.equals( editor.editable() ); // -&gt; true\n</code></pre>\n\n<p>Note that the <a href=\"#!/api/CKEDITOR.dom.range-property-root\" rel=\"CKEDITOR.dom.range-property-root\" class=\"docClass\">root</a> of a range is an important property, which limits many\nalgorithms implemented in range's methods. Therefore it is crucial, especially\nwhen using ranges inside inline editors, to specify correct root, so using\nthe <a href=\"#!/api/CKEDITOR.editor-method-createRange\" rel=\"CKEDITOR.editor-method-createRange\" class=\"docClass\">CKEDITOR.editor.createRange</a> method is highly recommended.</p>\n\n<h3>Selection</h3>\n\n<p>Range is only a logical representation of a piece of content in a DOM. It should not\nbe confused with a <a href=\"#!/api/CKEDITOR.dom.selection\" rel=\"CKEDITOR.dom.selection\" class=\"docClass\">selection</a> which represents \"physically\nmarked\" content. It is possible to create unlimited number of various ranges, when\nonly one real selection may exist at a time in a document. Ranges are used to read position\nof selection in the DOM and to move selection to new positions.</p>\n\n<p>The editor selection may be retrieved using the <a href=\"#!/api/CKEDITOR.editor-method-getSelection\" rel=\"CKEDITOR.editor-method-getSelection\" class=\"docClass\">CKEDITOR.editor.getSelection</a> method:</p>\n\n<pre><code>var sel = editor.getSelection(),\n    ranges = sel.getRange(); // <a href=\"#!/api/CKEDITOR.dom.rangeList\" rel=\"CKEDITOR.dom.rangeList\" class=\"docClass\">CKEDITOR.dom.rangeList</a> instance.\n\nvar range = ranges[ 0 ];\nrange.root; // -&gt; editor's editable element.\n</code></pre>\n\n<p>A range can also be selected:</p>\n\n<pre><code>var range = editor.createRange();\nrange.selectNodeContents( editor.editable() );\nsel.selectRanges( [ range ] );\n</code></pre>\n",
+    "!type": "fn(root: +CKEDITOR.dom.document|+CKEDITOR.dom.element)",
     "prototype": {
-     "!type": "fn(root: +CKEDITOR.dom.document|+CKEDITOR.dom.element)",
      "collapsed": {
       "!type": "bool",
       "!doc": "<p>Indicates that this is a collapsed range. A collapsed range has its\nstart and end boundaries at the very same point so nothing is contained\nin it.</p>\n\n<pre><code>var range = new <a href=\"#!/api/CKEDITOR.dom.range\" rel=\"CKEDITOR.dom.range\" class=\"docClass\">CKEDITOR.dom.range</a>( editor.document );\nrange.selectNodeContents( editor.document.getBody() );\nalert( range.collapsed ); // false\nrange.collapse();\nalert( range.collapsed ); // true\n</code></pre>\n"
@@ -1302,8 +1297,8 @@
    },
    "rangeList": {
     "!doc": "<p>Represents a list os <a href=\"#!/api/CKEDITOR.dom.range\" rel=\"CKEDITOR.dom.range\" class=\"docClass\">CKEDITOR.dom.range</a> objects, which can be easily\niterated sequentially.</p>\n",
+    "!type": "fn(ranges?: +CKEDITOR.dom.range|[+CKEDITOR.dom.range])",
     "prototype": {
-     "!type": "fn(ranges?: +CKEDITOR.dom.range|[+CKEDITOR.dom.range])",
      "createBookmarks": {
       "!type": "fn(serializable?: bool) -> [?]",
       "!doc": "<p>Create bookmarks for all ranges. See <a href=\"#!/api/CKEDITOR.dom.range-method-createBookmark\" rel=\"CKEDITOR.dom.range-method-createBookmark\" class=\"docClass\">CKEDITOR.dom.range.createBookmark</a>.</p>\n"
@@ -1333,8 +1328,8 @@
    },
    "selection": {
     "!doc": "<p>Manipulates the selection within a DOM element. If the current browser selection\nspans outside of the element, an empty selection object is returned.</p>\n\n<p>Despite the fact that selection's constructor allows to create selection instances,\nusually it's better to get selection from the editor instance:</p>\n\n<pre><code>var sel = editor.getSelection();\n</code></pre>\n\n<p>See <a href=\"#!/api/CKEDITOR.editor-method-getSelection\" rel=\"CKEDITOR.editor-method-getSelection\" class=\"docClass\">CKEDITOR.editor.getSelection</a>.</p>\n",
+    "!type": "fn(target: +CKEDITOR.dom.document|+CKEDITOR.dom.element|+CKEDITOR.dom.selection)",
     "prototype": {
-     "!type": "fn(target: +CKEDITOR.dom.document|+CKEDITOR.dom.element|+CKEDITOR.dom.selection)",
      "document": {
       "!type": "+CKEDITOR.dom.document",
       "!doc": "<p>Document in which selection is anchored.</p>\n"
@@ -1435,8 +1430,8 @@
    },
    "text": {
     "!doc": "<p>Represents a DOM text node.</p>\n\n<pre><code>var nativeNode = document.createTextNode( 'Example' );\nvar text = <a href=\"#!/api/CKEDITOR.dom.text\" rel=\"CKEDITOR.dom.text\" class=\"docClass\">CKEDITOR.dom.text</a>( nativeNode );\n\nvar text = <a href=\"#!/api/CKEDITOR.dom.text\" rel=\"CKEDITOR.dom.text\" class=\"docClass\">CKEDITOR.dom.text</a>( 'Example' );\n</code></pre>\n",
+    "!type": "fn(text: ?|string, ownerDocument?: +CKEDITOR.dom.document)",
     "prototype": {
-     "!type": "fn(text: ?|string, ownerDocument?: +CKEDITOR.dom.document)",
      "type": {
       "!type": "number",
       "!doc": "<p>The node type. This is a constant value set to <a href=\"#!/api/CKEDITOR-property-NODE_TEXT\" rel=\"CKEDITOR-property-NODE_TEXT\" class=\"docClass\">CKEDITOR.NODE_TEXT</a>.</p>\n"
@@ -1465,8 +1460,8 @@
    },
    "walker": {
     "!doc": "<p>Utility class to \"walk\" the DOM inside a range boundaries. If the\nrange starts or ends in the middle of the text node this node will\nbe included as a whole. Outside changes to the range may break the walker.</p>\n\n<p>The walker may return nodes that are not totaly included into the\nrange boundaires. Let's take the following range representation,\nwhere the square brackets indicate the boundaries:</p>\n\n<pre><code>[&lt;p&gt;Some &lt;b&gt;sample] text&lt;/b&gt;\n</code></pre>\n\n<p>While walking forward into the above range, the following nodes are\nreturned: <code>&lt;p&gt;</code>, <code>\"Some \"</code>, <code>&lt;b&gt;</code> and <code>\"sample\"</code>. Going\nbackwards instead we have: <code>\"sample\"</code> and <code>\"Some \"</code>. So note that the\nwalker always returns nodes when \"entering\" them, but not when\n\"leaving\" them. The guard function is instead called both when\nentering and leaving nodes.</p>\n",
+    "!type": "fn(range: +CKEDITOR.dom.range)",
     "prototype": {
-     "!type": "fn(range: +CKEDITOR.dom.range)",
      "_": {
       "!type": "?"
      },
@@ -1554,8 +1549,8 @@
    },
    "window": {
     "!doc": "<p>Represents a DOM window.</p>\n\n<pre><code>var document = new <a href=\"#!/api/CKEDITOR.dom.window\" rel=\"CKEDITOR.dom.window\" class=\"docClass\">CKEDITOR.dom.window</a>( window );\n</code></pre>\n",
+    "!type": "fn(domWindow: ?)",
     "prototype": {
-     "!type": "fn(domWindow: ?)",
      "focus": {
       "!type": "fn() -> !this",
       "!doc": "<p>Moves the selection focus to this window.</p>\n\n<pre><code>var win = new <a href=\"#!/api/CKEDITOR.dom.window\" rel=\"CKEDITOR.dom.window\" class=\"docClass\">CKEDITOR.dom.window</a>( window );\nwin.focus();\n</code></pre>\n"
@@ -1644,8 +1639,8 @@
   },
   "editable": {
    "!doc": "<p>Editable class which provides all editing related activities by\nthe <code>contenteditable</code> element, dynamically get attached to editor instance.</p>\n",
+   "!type": "fn(editor: +CKEDITOR.editor, element: +HTMLElement|+CKEDITOR.dom.element)",
    "prototype": {
-    "!type": "fn(editor: +CKEDITOR.editor, element: +HTMLElement|+CKEDITOR.dom.element)",
     "hasFocus": {
      "!type": "bool",
      "!doc": "<p>Indicates whether the editable element gained focus.</p>\n"
@@ -1730,8 +1725,8 @@
   },
   "editor": {
    "!doc": "<p>Represents an editor instance. This constructor should be rarely\nused in favor of the <a href=\"#!/api/CKEDITOR\" rel=\"CKEDITOR\" class=\"docClass\">CKEDITOR</a> editor creation functions.</p>\n",
+   "!type": "fn(instanceConfig?: ?, element?: +CKEDITOR.dom.element, mode?: number)",
    "prototype": {
-    "!type": "fn(instanceConfig?: ?, element?: +CKEDITOR.dom.element, mode?: number)",
     "activeEnterMode": {
      "!type": "number",
      "!doc": "<p>The dynamic Enter mode which should be used in the current context (selection location).\nBy default it equals the <a href=\"#!/api/CKEDITOR.editor-property-enterMode\" rel=\"CKEDITOR.editor-property-enterMode\" class=\"docClass\">enterMode</a> and it can be changed by the <a href=\"#!/api/CKEDITOR.editor-method-setActiveEnterMode\" rel=\"CKEDITOR.editor-method-setActiveEnterMode\" class=\"docClass\">setActiveEnterMode</a> method.</p>\n\n<p>See also the <a href=\"#!/api/CKEDITOR.editor-method-setActiveEnterMode\" rel=\"CKEDITOR.editor-method-setActiveEnterMode\" class=\"docClass\">setActiveEnterMode</a> method for an explanation of dynamic settings.</p>\n"
@@ -2286,8 +2281,8 @@
     "!doc": "<p>Virtual class representing the <a href=\"#!/api/CKEDITOR.filter-method-disallow\" rel=\"CKEDITOR.filter-method-disallow\" class=\"docClass\">CKEDITOR.filter.disallow</a> argument and a type of\nthe <a href=\"#!/api/CKEDITOR.config-cfg-disallowedContent\" rel=\"CKEDITOR.config-cfg-disallowedContent\" class=\"docClass\">CKEDITOR.config.disallowedContent</a> option.</p>\n\n<p>This is a simplified version of the <a href=\"#!/api/CKEDITOR.filter.allowedContentRules\" rel=\"CKEDITOR.filter.allowedContentRules\" class=\"docClass\">CKEDITOR.filter.allowedContentRules</a> type.\nOnly the string format and object format are accepted. Required properties\nare not allowed in this format.</p>\n\n<p>Read more in the <a href=\"#!/guide/dev_disallowed_content\">Disallowed Content guide</a>.</p>\n"
    },
    "!doc": "<p>Highly configurable class which implements input data filtering mechanisms\nand core functions used for the activation of editor features.</p>\n\n<p>A filter instance is always available under the <a href=\"#!/api/CKEDITOR.editor-property-filter\" rel=\"CKEDITOR.editor-property-filter\" class=\"docClass\">CKEDITOR.editor.filter</a>\nproperty and is used by the editor in its core features like filtering input data,\napplying data transformations, validating whether a feature may be enabled for\nthe current setup. It may be configured in two ways:</p>\n\n<ul>\n<li>By the user, with the <a href=\"#!/api/CKEDITOR.config-cfg-allowedContent\" rel=\"CKEDITOR.config-cfg-allowedContent\" class=\"docClass\">CKEDITOR.config.allowedContent</a> setting.</li>\n<li>Automatically, by loaded features (toolbar items, commands, etc.).</li>\n</ul>\n\n\n<p>In both cases additional allowed content rules may be added by\nsetting the <a href=\"#!/api/CKEDITOR.config-cfg-extraAllowedContent\" rel=\"CKEDITOR.config-cfg-extraAllowedContent\" class=\"docClass\">CKEDITOR.config.extraAllowedContent</a>\nconfiguration option.</p>\n\n<p><strong>Note</strong>: Filter rules will be extended with the following elements\ndepending on the <a href=\"#!/api/CKEDITOR.config-cfg-enterMode\" rel=\"CKEDITOR.config-cfg-enterMode\" class=\"docClass\">CKEDITOR.config.enterMode</a> and\n<a href=\"#!/api/CKEDITOR.config-cfg-shiftEnterMode\" rel=\"CKEDITOR.config-cfg-shiftEnterMode\" class=\"docClass\">CKEDITOR.config.shiftEnterMode</a> settings:</p>\n\n<ul>\n<li><code>'p'</code> &ndash; for <a href=\"#!/api/CKEDITOR-property-ENTER_P\" rel=\"CKEDITOR-property-ENTER_P\" class=\"docClass\">CKEDITOR.ENTER_P</a>,</li>\n<li><code>'div'</code> &ndash; for <a href=\"#!/api/CKEDITOR-property-ENTER_DIV\" rel=\"CKEDITOR-property-ENTER_DIV\" class=\"docClass\">CKEDITOR.ENTER_DIV</a>,</li>\n<li><code>'br'</code> &ndash; for <a href=\"#!/api/CKEDITOR-property-ENTER_BR\" rel=\"CKEDITOR-property-ENTER_BR\" class=\"docClass\">CKEDITOR.ENTER_BR</a>.</li>\n</ul>\n\n\n<p><strong>Read more</strong> about the Advanced Content Filter in <a href=\"#!/guide/dev_advanced_content_filter\">guides</a>.</p>\n\n<p>Filter may also be used as a standalone instance by passing\n<a href=\"#!/api/CKEDITOR.filter.allowedContentRules\" rel=\"CKEDITOR.filter.allowedContentRules\" class=\"docClass\">CKEDITOR.filter.allowedContentRules</a> instead of <a href=\"#!/api/CKEDITOR.editor\" rel=\"CKEDITOR.editor\" class=\"docClass\">CKEDITOR.editor</a>\nto the constructor:</p>\n\n<pre><code>var filter = new <a href=\"#!/api/CKEDITOR.filter\" rel=\"CKEDITOR.filter\" class=\"docClass\">CKEDITOR.filter</a>( 'b' );\n\nfilter.check( 'b' ); // -&gt; true\nfilter.check( 'i' ); // -&gt; false\nfilter.allow( 'i' );\nfilter.check( 'i' ); // -&gt; true\n</code></pre>\n",
+   "!type": "fn(editorOrRules: +CKEDITOR.editor|+CKEDITOR.filter.allowedContentRules)",
    "prototype": {
-    "!type": "fn(editorOrRules: +CKEDITOR.editor|+CKEDITOR.filter.allowedContentRules)",
     "allowedContent": {
      "!type": "[?]",
      "!doc": "<p>Array of rules added by the <a href=\"#!/api/CKEDITOR.filter-method-allow\" rel=\"CKEDITOR.filter-method-allow\" class=\"docClass\">allow</a> method (including those\nloaded from <a href=\"#!/api/CKEDITOR.config-cfg-allowedContent\" rel=\"CKEDITOR.config-cfg-allowedContent\" class=\"docClass\">CKEDITOR.config.allowedContent</a> and\n<a href=\"#!/api/CKEDITOR.config-cfg-extraAllowedContent\" rel=\"CKEDITOR.config-cfg-extraAllowedContent\" class=\"docClass\">CKEDITOR.config.extraAllowedContent</a>).</p>\n\n<p>Rules in this array are in unified allowed content rules format.</p>\n\n<p>This property is useful for debugging issues with rules string parsing\nor for checking which rules were automatically added by editor features.</p>\n"
@@ -2406,9 +2401,16 @@
    }
   },
   "focusManager": {
+   "_": {
+    "!doc": "<p>Object used to store private stuff.</p>\n",
+    "blurDelay": {
+     "!type": "number",
+     "!doc": "<p>The delay (in milliseconds) to deactivate the editor when a UI DOM element has lost focus.</p>\n"
+    }
+   },
    "!doc": "<p>Manages the focus activity in an editor instance. This class is to be\nused mainly by UI element coders when adding interface elements that need\nto set the focus state of the editor.</p>\n\n<pre><code>var focusManager = new <a href=\"#!/api/CKEDITOR.focusManager\" rel=\"CKEDITOR.focusManager\" class=\"docClass\">CKEDITOR.focusManager</a>( editor );\nfocusManager.focus();\n</code></pre>\n",
+   "!type": "fn(editor: +CKEDITOR.editor)",
    "prototype": {
-    "!type": "fn(editor: +CKEDITOR.editor)",
     "_": {
      "!type": "?",
      "!doc": "<p>Object used to store private stuff.</p>\n"
@@ -2445,19 +2447,12 @@
      "!type": "fn() -> !this",
      "!doc": "<p>Restores the automatic focus management if <a href=\"#!/api/CKEDITOR.focusManager-method-lock\" rel=\"CKEDITOR.focusManager-method-lock\" class=\"docClass\">lock</a> is called.</p>\n"
     }
-   },
-   "_": {
-    "!doc": "<p>Object used to store private stuff.</p>\n",
-    "blurDelay": {
-     "!type": "number",
-     "!doc": "<p>The delay (in milliseconds) to deactivate the editor when a UI DOM element has lost focus.</p>\n"
-    }
    }
   },
   "htmlDataProcessor": {
    "!doc": "<p>Represents an HTML data processor, which is responsible for translating and\ntransforming the editor data on input and output.</p>\n",
+   "!type": "fn(editor: +CKEDITOR.editor)",
    "prototype": {
-    "!type": "fn(editor: +CKEDITOR.editor)",
     "dataFilter": {
      "!type": "+CKEDITOR.htmlParser.filter",
      "!doc": "<p>Data filter used when processing input by <a href=\"#!/api/CKEDITOR.htmlDataProcessor-method-toHtml\" rel=\"CKEDITOR.htmlDataProcessor-method-toHtml\" class=\"docClass\">toHtml</a>.</p>\n"
@@ -2483,8 +2478,8 @@
   "htmlParser": {
    "basicWriter": {
     "!doc": "<p>TODO</p>\n\n<p>@todo</p>\n",
+    "!type": "fn()",
     "prototype": {
-     "!type": "fn()",
      "attribute": {
       "!type": "fn(attName: string, attValue: string) -> !this",
       "!doc": "<p>Writes an attribute. This function should be called after opening the\ntag with <a href=\"#!/api/CKEDITOR.htmlParser.basicWriter-method-openTagClose\" rel=\"CKEDITOR.htmlParser.basicWriter-method-openTagClose\" class=\"docClass\">openTagClose</a>.</p>\n\n<pre><code>// Writes ' class=\"MyClass\"'.\nwriter.attribute( 'class', 'MyClass' );\n</code></pre>\n"
@@ -2525,8 +2520,8 @@
    },
    "cdata": {
     "!doc": "<p>A lightweight representation of HTML CDATA.</p>\n",
+    "!type": "fn(value: string)",
     "prototype": {
-     "!type": "fn(value: string)",
      "type": {
       "!type": "number",
       "!doc": "<p>CDATA has the same type as <a href=\"#!/api/CKEDITOR.htmlParser.text\" rel=\"CKEDITOR.htmlParser.text\" class=\"docClass\">CKEDITOR.htmlParser.text</a> This is\na constant value set to <a href=\"#!/api/CKEDITOR-property-NODE_TEXT\" rel=\"CKEDITOR-property-NODE_TEXT\" class=\"docClass\">CKEDITOR.NODE_TEXT</a>.</p>\n"
@@ -2543,7 +2538,6 @@
    },
    "node": {
     "prototype": {
-     "!type": "fn()",
      "getAscendant": {
       "!type": "fn(condition: string|?|fn()) -> +CKEDITOR.htmlParser.element",
       "!doc": "<p>Gets the closest ancestor element of this element which satisfies given condition</p>\n"
@@ -2573,12 +2567,13 @@
       "!doc": "<p>Wraps this element with given <code>wrapper</code>.</p>\n"
      }
     },
-    "!doc": "<p>A lightweight representation of HTML node.</p>\n"
+    "!doc": "<p>A lightweight representation of HTML node.</p>\n",
+    "!type": "fn()"
    },
    "comment": {
     "!doc": "<p>A lightweight representation of an HTML comment.</p>\n",
+    "!type": "fn(value: string)",
     "prototype": {
-     "!type": "fn(value: string)",
      "_": {
       "!type": "?"
      },
@@ -2602,8 +2597,8 @@
    },
    "cssStyle": {
     "!doc": "<p>Object presentation of CSS style declaration text.</p>\n",
+    "!type": "fn(elementOrStyleText: +CKEDITOR.htmlParser.element|string)",
     "prototype": {
-     "!type": "fn(elementOrStyleText: +CKEDITOR.htmlParser.element|string)",
      "populate": {
       "!type": "fn(obj: +CKEDITOR.htmlParser.element|+CKEDITOR.dom.element|?) -> !this",
       "!doc": "<p>Applies the styles to the specified element or object.</p>\n"
@@ -2616,8 +2611,8 @@
    },
    "element": {
     "!doc": "<p>A lightweight representation of an HTML element.</p>\n",
+    "!type": "fn(name: string, attributes: ?)",
     "prototype": {
-     "!type": "fn(name: string, attributes: ?)",
      "_": {
       "!type": "?"
      },
@@ -2705,8 +2700,8 @@
    },
    "filter": {
     "!doc": "<p>Filter is a configurable tool for transforming and filtering <a href=\"#!/api/CKEDITOR.htmlParser.node\" rel=\"CKEDITOR.htmlParser.node\" class=\"docClass\">nodes</a>.\nIt is mainly used during data processing phase which is done not on real DOM nodes,\nbut on their simplified form represented by <a href=\"#!/api/CKEDITOR.htmlParser.node\" rel=\"CKEDITOR.htmlParser.node\" class=\"docClass\">CKEDITOR.htmlParser.node</a> class and its subclasses.</p>\n\n<pre><code>var filter = new <a href=\"#!/api/CKEDITOR.htmlParser.filter\" rel=\"CKEDITOR.htmlParser.filter\" class=\"docClass\">CKEDITOR.htmlParser.filter</a>( {\n    text: function( value ) {\n        return '@' + value + '@';\n    },\n    elements: {\n        p: function( element ) {\n            element.attributes.foo = '1';\n        }\n    }\n} );\n\nvar fragment = <a href=\"#!/api/CKEDITOR.htmlParser.fragment-static-method-fromHtml\" rel=\"CKEDITOR.htmlParser.fragment-static-method-fromHtml\" class=\"docClass\">CKEDITOR.htmlParser.fragment.fromHtml</a>( '&lt;p&gt;Foo&lt;b&gt;bar!&lt;/b&gt;&lt;/p&gt;' ),\n    writer = new <a href=\"#!/api/CKEDITOR.htmlParser.basicWriter\" rel=\"CKEDITOR.htmlParser.basicWriter\" class=\"docClass\">CKEDITOR.htmlParser.basicWriter</a>();\nfilter.applyTo( fragment );\nfragment.writeHtml( writer );\nwriter.getHtml(); // '&lt;p foo=\"1\"&gt;@Foo@&lt;b&gt;@bar!@&lt;/b&gt;&lt;/p&gt;'\n</code></pre>\n",
+    "!type": "fn(rules?: +CKEDITOR.htmlParser.filterRulesDefinition)",
     "prototype": {
-     "!type": "fn(rules?: +CKEDITOR.htmlParser.filterRulesDefinition)",
      "attributeNameRules": {
       "!type": "+CKEDITOR.htmlParser.filterRulesGroup",
       "!doc": "<p>Rules for attribute names.</p>\n"
@@ -2781,8 +2776,8 @@
    },
    "fragment": {
     "!doc": "<p>A lightweight representation of an HTML DOM structure.</p>\n",
+    "!type": "fn()",
     "prototype": {
-     "!type": "fn()",
      "_": {
       "!type": "?"
      },
@@ -2829,8 +2824,8 @@
     }
    },
    "!doc": "<p>Provides an \"event like\" system to parse strings of HTML data.</p>\n\n<pre><code>var parser = new <a href=\"#!/api/CKEDITOR.htmlParser\" rel=\"CKEDITOR.htmlParser\" class=\"docClass\">CKEDITOR.htmlParser</a>();\nparser.onTagOpen = function( tagName, attributes, selfClosing ) {\n    alert( tagName );\n};\nparser.parse( '&lt;p&gt;Some &lt;b&gt;text&lt;/b&gt;.&lt;/p&gt;' ); // Alerts 'p', 'b'.\n</code></pre>\n",
+   "!type": "fn()",
    "prototype": {
-    "!type": "fn()",
     "onCDATA": {
      "!type": "fn(cdata: string) -> !this",
      "!doc": "<p>Function to be fired when CDATA section is found. This function\nshould be overriden when using this class.</p>\n\n<pre><code>var parser = new <a href=\"#!/api/CKEDITOR.htmlParser\" rel=\"CKEDITOR.htmlParser\" class=\"docClass\">CKEDITOR.htmlParser</a>();\nparser.onCDATA = function( cdata ) {\n    alert( cdata ); // 'var hello;'\n} );\nparser.parse( '&lt;script&gt;var hello;&lt;/script&gt;' );\n</code></pre>\n"
@@ -2858,8 +2853,8 @@
    },
    "text": {
     "!doc": "<p>A lightweight representation of HTML text.</p>\n",
+    "!type": "fn(value: string)",
     "prototype": {
-     "!type": "fn(value: string)",
      "_": {
       "!type": "?"
      },
@@ -3052,7 +3047,7 @@
    "!doc": "<p>The document of the window storing the CKEDITOR object.</p>\n\n<pre><code>alert( CKEDITOR.document.getBody().getName() ); // 'body'\n</code></pre>\n"
   },
   "instances": {
-   "!type": "+A",
+   "!type": "?",
    "!doc": "<p>Stores references to all editor instances created. The name of the properties\nin this object correspond to instance names, and their values contain the\n<a href=\"#!/api/CKEDITOR.editor\" rel=\"CKEDITOR.editor\" class=\"docClass\">CKEDITOR.editor</a> object representing them.</p>\n\n<pre><code>alert( CKEDITOR.instances.editor1.name ); // 'editor1'\n</code></pre>\n"
   },
   "loadFullCoreTimeout": {
@@ -3165,8 +3160,8 @@
   },
   "keystrokeHandler": {
    "!doc": "<p>Controls keystrokes typing in an editor instance.</p>\n",
+   "!type": "fn(editor: +CKEDITOR.editor)",
    "prototype": {
-    "!type": "fn(editor: +CKEDITOR.editor)",
     "blockedKeystrokes": {
      "!type": "?",
      "!doc": "<p>A list of keystrokes that should be blocked if not defined in\n<a href=\"#!/api/CKEDITOR.keystrokeHandler-property-keystrokes\" rel=\"CKEDITOR.keystrokeHandler-property-keystrokes\" class=\"docClass\">keystrokes</a>. In this way it is possible to block the default\nbrowser behavior for those keystrokes.</p>\n"
@@ -3254,9 +3249,8 @@
   },
   "plugins": {
    "!doc": "<p>Manages plugins registration and loading.</p>\n",
-   "prototype": {
-    "!type": "fn(basePath: string, fileName: string)"
-   },
+   "!type": "fn(basePath: string, fileName: string)",
+   "prototype": {},
    "setLang": {
     "!type": "fn(pluginName: string, languageCode: string, languageEntries: ?) -> !this",
     "!doc": "<p>Loads a specific language file, or auto detect it. A callback is\nthen called when the file gets loaded.</p>\n\n<pre><code><a href=\"#!/api/CKEDITOR.plugins-method-setLang\" rel=\"CKEDITOR.plugins-method-setLang\" class=\"docClass\">CKEDITOR.plugins.setLang</a>( 'myPlugin', 'en', {\n    title: 'My plugin',\n    selectOption: 'Please select an option'\n} );\n</code></pre>\n"
@@ -3311,8 +3305,8 @@
     "!doc": "<p>Loads one or more resources.</p>\n\n<pre><code><a href=\"#!/api/CKEDITOR.plugins-method-load\" rel=\"CKEDITOR.plugins-method-load\" class=\"docClass\">CKEDITOR.plugins.load</a>( 'myplugin', function( plugins ) {\n    alert( plugins[ 'myplugin' ] ); // object\n} );\n</code></pre>\n"
    },
    "!doc": "<p>Base class for resource managers, like plugins. This class is not\nintended to be used out of the CKEditor core code.</p>\n",
+   "!type": "fn(basePath: string, fileName: string)",
    "prototype": {
-    "!type": "fn(basePath: string, fileName: string)",
     "_": {
      "!type": "?"
     },
@@ -3417,8 +3411,8 @@
     "!doc": "<p>Namespace containing custom style handlers added with <a href=\"#!/api/CKEDITOR.style-static-method-addCustomHandler\" rel=\"CKEDITOR.style-static-method-addCustomHandler\" class=\"docClass\">CKEDITOR.style.addCustomHandler</a>.</p>\n"
    },
    "!doc": "<p>A class representing a style instance for the specific style definition.\nIn this approach, a style is a set of properties, like attributes and styles,\nwhich can be applied to and removed from a <a href=\"#!/api/CKEDITOR.dom.selection\" rel=\"CKEDITOR.dom.selection\" class=\"docClass\">selection</a> through\n<a href=\"#!/api/CKEDITOR.editor\" rel=\"CKEDITOR.editor\" class=\"docClass\">editor</a> methods: <a href=\"#!/api/CKEDITOR.editor-method-applyStyle\" rel=\"CKEDITOR.editor-method-applyStyle\" class=\"docClass\">CKEDITOR.editor.applyStyle</a> and <a href=\"#!/api/CKEDITOR.editor-method-removeStyle\" rel=\"CKEDITOR.editor-method-removeStyle\" class=\"docClass\">CKEDITOR.editor.removeStyle</a>,\nrespectively.</p>\n\n<p>Three default style types are available: <a href=\"#!/api/CKEDITOR-property-STYLE_BLOCK\" rel=\"CKEDITOR-property-STYLE_BLOCK\" class=\"docClass\">STYLE_BLOCK</a>, <a href=\"#!/api/CKEDITOR-property-STYLE_INLINE\" rel=\"CKEDITOR-property-STYLE_INLINE\" class=\"docClass\">STYLE_INLINE</a>,\nand <a href=\"#!/api/CKEDITOR-property-STYLE_OBJECT\" rel=\"CKEDITOR-property-STYLE_OBJECT\" class=\"docClass\">STYLE_OBJECT</a>. Based on its type, a style heavily changes its behavior.\nYou can read more about style types in the <a href=\"#!/guide/dev_styles-section-style-types\">Style Types section of the Styles guide</a>.</p>\n\n<p>It is possible to define a custom style type by subclassing this class by using the <a href=\"#!/api/CKEDITOR.style-static-method-addCustomHandler\" rel=\"CKEDITOR.style-static-method-addCustomHandler\" class=\"docClass\">addCustomHandler</a> method.\nHowever, because of great complexity of the styles handling job, it is only possible in very specific cases.</p>\n\n<h3>Usage</h3>\n\n<p>Basic usage:</p>\n\n<pre><code>// Define a block style.\nvar style = new <a href=\"#!/api/CKEDITOR.style\" rel=\"CKEDITOR.style\" class=\"docClass\">CKEDITOR.style</a>( { element: 'h1' } );\n\n// Considering the following selection:\n// &lt;p&gt;Foo&lt;/p&gt;&lt;p&gt;Bar^&lt;/p&gt;\n// Executing:\neditor.applyStyle( style );\n// Will give:\n// &lt;p&gt;Foo&lt;/p&gt;&lt;h1&gt;Bar^&lt;/h1&gt;\nstyle.checkActive( editor.elementPath(), editor ); // -&gt; true\n\neditor.removeStyle( style );\n// Will give:\n// &lt;p&gt;Foo&lt;/p&gt;&lt;p&gt;Bar^&lt;/p&gt;\n\nstyle.checkActive( editor.elementPath(), editor ); // -&gt; false\n</code></pre>\n\n<p>Object style:</p>\n\n<pre><code>// Define an object style.\nvar style = new <a href=\"#!/api/CKEDITOR.style\" rel=\"CKEDITOR.style\" class=\"docClass\">CKEDITOR.style</a>( { element: 'img', attributes: { 'class': 'foo' } } );\n\n// Considering the following selection:\n// &lt;p&gt;&lt;img src=\"bar.png\" alt=\"\" /&gt;Foo^&lt;/p&gt;\n// Executing:\neditor.applyStyle( style );\n// Will not apply the style, because the image is not selected.\n// You can check if a style can be applied on the current selection with:\nstyle.checkApplicable( editor.elementPath(), editor ); // -&gt; false\n\n// Considering the following selection:\n// &lt;p&gt;[&lt;img src=\"bar.png\" alt=\"\" /&gt;]Foo&lt;/p&gt;\n// Executing\neditor.applyStyle( style );\n// Will give:\n// &lt;p&gt;[&lt;img src=\"bar.png\" alt=\"\" class=\"foo\" /&gt;]Foo&lt;/p&gt;\n</code></pre>\n\n<h3>API changes introduced in CKEditor 4.4</h3>\n\n<p>Before CKEditor 4.4 all style instances had no access at all to the <a href=\"#!/api/CKEDITOR.editor\" rel=\"CKEDITOR.editor\" class=\"docClass\">editor instance</a>\nwithin which the style is used. Neither the style constructor, nor style methods were requiring\npassing the editor instance which made styles independent of the editor and hence its settings and state.\nThis design decision came from CKEditor 3; it started causing problems and became an unsolvable obstacle for\nthe widget style handler which we introduced in CKEditor 4.4.</p>\n\n<p>There were two possible solutions. Passing an editor instance to the style constructor or to every method.\nThe first approach would be clean, however, having in mind the backward compatibility, we did not decide\nto go for it. It would bind the style to one editor instance, making it unusable with other editor instances.\nThat could break many implementations reusing styles between editors. Therefore, we decided to take the longer\nbut safer path &mdash; the editor instance became an argument for nearly all style methods, however,\nfor backward compatibility reasons, all these methods will work without it. Even the newly\nimplemented widget style handler's methods will not fail,\nalthough they will also not work by aborting at an early stage.</p>\n\n<p>Therefore, you can safely upgrade to CKEditor 4.4 even if you use style methods without providing\nthe editor instance. You must only align your code if your implementation should handle widget styles\nor any other custom style handler. Of course, we recommend doing this in any case to avoid potential\nproblems in the future.</p>\n",
+   "!type": "fn(styleDefinition: ?, variablesValues: ?)",
    "prototype": {
-    "!type": "fn(styleDefinition: ?, variablesValues: ?)",
     "alwaysRemoveElement": {
      "!type": "bool",
      "!doc": "<p>Indicates that any matches element of this style will be eventually removed\nwhen calling <a href=\"#!/api/CKEDITOR.editor-method-removeStyle\" rel=\"CKEDITOR.editor-method-removeStyle\" class=\"docClass\">CKEDITOR.editor.removeStyle</a>.</p>\n"
@@ -3487,8 +3481,8 @@
   },
   "styleCommand": {
    "!doc": "<p>Generic style command. It applies a specific style when executed.</p>\n\n<pre><code>var boldStyle = new <a href=\"#!/api/CKEDITOR.style\" rel=\"CKEDITOR.style\" class=\"docClass\">CKEDITOR.style</a>( { element: 'strong' } );\n// Register the \"bold\" command, which applies the bold style.\neditor.addCommand( 'bold', new CKEDITOR.dialogCommand( boldStyle ) );\n</code></pre>\n",
+   "!type": "fn(style: +CKEDITOR.style, ext?: ?)",
    "prototype": {
-    "!type": "fn(style: +CKEDITOR.style, ext?: ?)",
     "exec": {
      "!type": "fn(editor: +CKEDITOR.editor) -> !this"
     }
@@ -3496,14 +3490,13 @@
   },
   "stylesSet": {
    "!doc": "<p>Manages styles registration and loading. See also <a href=\"#!/api/CKEDITOR.config-cfg-stylesSet\" rel=\"CKEDITOR.config-cfg-stylesSet\" class=\"docClass\">CKEDITOR.config.stylesSet</a>.</p>\n\n<pre><code>// The set of styles for the &lt;b&gt;Styles&lt;/b&gt; drop-down list.\n<a href=\"#!/api/CKEDITOR.stylesSet-method-add\" rel=\"CKEDITOR.stylesSet-method-add\" class=\"docClass\">CKEDITOR.stylesSet.add</a>( 'default', [\n    // Block Styles\n    { name: 'Blue Title',       element: 'h3',      styles: { 'color': 'Blue' } },\n    { name: 'Red Title',        element: 'h3',      styles: { 'color': 'Red' } },\n\n    // Inline Styles\n    { name: 'Marker: Yellow',   element: 'span',    styles: { 'background-color': 'Yellow' } },\n    { name: 'Marker: Green',    element: 'span',    styles: { 'background-color': 'Lime' } },\n\n    // Object Styles\n    {\n        name: 'Image on Left',\n        element: 'img',\n        attributes: {\n            style: 'padding: 5px; margin-right: 5px',\n            border: '2',\n            align: 'left'\n        }\n    }\n] );\n</code></pre>\n",
-   "prototype": {
-    "!type": "fn(basePath: string, fileName: string)"
-   }
+   "!type": "fn(basePath: string, fileName: string)",
+   "prototype": {}
   },
   "template": {
    "!doc": "<p>Lightweight template used to build the output string from variables.</p>\n\n<pre><code>// HTML template for presenting a label UI.\nvar tpl = new <a href=\"#!/api/CKEDITOR.template\" rel=\"CKEDITOR.template\" class=\"docClass\">CKEDITOR.template</a>( '&lt;div class=\"{cls}\"&gt;{label}&lt;/div&gt;' );\nalert( tpl.output( { cls: 'cke-label', label: 'foo'} ) ); // '&lt;div class=\"cke-label\"&gt;foo&lt;/div&gt;'\n</code></pre>\n",
+   "!type": "fn(source: string)",
    "prototype": {
-    "!type": "fn(source: string)",
     "output": {
      "!type": "fn(data: ?, buffer?: [?]) -> string|number",
      "!doc": "<p>Processes the template, filling its variables with the provided data.</p>\n"
@@ -3716,8 +3709,8 @@
     }
    },
    "!doc": "<p>Contains UI features related to an editor instance.</p>\n",
+   "!type": "fn(editor: +CKEDITOR.editor)",
    "prototype": {
-    "!type": "fn(editor: +CKEDITOR.editor)",
     "_": {
      "!type": "?",
      "!doc": "<p>Object used to hold private stuff.</p>\n"
