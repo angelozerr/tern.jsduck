@@ -213,7 +213,7 @@
         case 'function':
           return 'fn()';
         default:
-          if (type.charAt(0) == "'") return "string";
+          if (["'", '"'].indexOf(type.charAt(0)) !== -1) return "string";
           if (type.length > 2 && type.substring(type.length -2, type.length) == "[]") return "[" + getTernTypeFromString(type.substring(0, type.length -2)) + "]";
           return "+" + type;
       }
