@@ -3,6 +3,7 @@ module.exports = function(grunt) {
   // ExtJS
   require("./tasks/generate-tern.extjs_4.2.1");
   require("./tasks/generate-tern.extjs_5.0.0");
+  require("./tasks/generate-tern.extjs_5.1.1");
   // CKEditor
   require("./tasks/generate-tern.ckeditor_4.4.7");
   
