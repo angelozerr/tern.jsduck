@@ -46,14 +46,24 @@
      */
     function visitMembers(jsduckApi, ternDef, options) {
       var members = jsduckApi.members;
+      var config = {}, hasConfig = false;
       if (members) {
         var constructorMember = getConstructorMember(members);
         if (constructorMember) {
+          // Adding expando properties
+          constructorMember._isConstructor = true;
+          constructorMember._className = jsduckApi.name;
+
           var ternMember = getTernClass(jsduckApi.name, ternDef);
-          var ternType = getTernType(constructorMember, true);
+          var ternType = getTernType(constructorMember);
           if (ternType)
             ternMember["!type"] = ternType;
-          ternMember = ternMember.prototype = {};
+          hasConfig = constructorMember._hasConfig;
+          if (hasConfig) {
+            var configName = getConfigNameForClass(jsduckApi.name);
+            ternDef['!define'][configName] = config;
+          }
+          ternMember.prototype = {};
         }
         for (var i = 0; i < members.length; i++) {
           var member = members[i];
@@ -61,9 +71,13 @@
               || options["private"]) {
             var ternMember = visitMember(member,
                 jsduckApi, ternDef);
-            if (ternMember)
+            if (ternMember) {
               addDocIfNeeded(member, ternMember,
                   options);
+              if (hasConfig && member.tagname === 'cfg') {
+                config[member.name] = ternMember;
+              }
+            }
           }
         }
       }
@@ -76,6 +90,10 @@
           return member;
         }
       }
+    }
+
+    function getConfigNameForClass(className) {
+      return className.replace(/\./g, '_') + '_cfg';
     }
 
     /**
@@ -114,7 +132,7 @@
         return member.autodetected[name];
     }
 
-    function getTernType(member, isConstructor) {
+    function getTernType(member) {
       var memberType = member.type, memberParams = member.params, memberReturn = member.return;
       if (!memberType) {
         if (memberParams || memberReturn) {
@@ -122,10 +140,16 @@
               // it's a function with parameters
               if (memberParams) {
                 for (var i = 0; i < memberParams.length; i++) {
-                  var param = memberParams[i], name = param.name, optional = param.optional, type = getTernType(
-                      param, null)
-                    if (i > 0)
-                      fnType += ', ';
+                  var param = memberParams[i], name = param.name, optional = param.optional, type;
+                  // give a hint so that we can bind the Object type to the config properties of the class
+                  // in getTernTypesFromString
+                  if (member._isConstructor) {
+                    param._constructorParamFor = member._className;
+                  }
+                  type = getTernType(param);
+                  member._hasConfig = member._hasConfig || param._isConfig;
+                  if (i > 0)
+                    fnType += ', ';
                   fnType += name;
                   if (optional)
                     fnType += '?';
@@ -138,7 +162,7 @@
                 }
               }
               fnType += ')';
-              if (!isConstructor) {
+              if (!member._isConstructor) {
                 if (memberReturn) {
                   var returnType = getTernType(memberReturn);
                   if (!returnType) returnType = '?';
@@ -152,15 +176,22 @@
         }
         return null;
       }
-      return getTernTypesFromString(memberType);
+      return getTernTypesFromString(member);
     }
 
-    function getTernTypesFromString(type) {
-      var ternType = null, types = type.split("/");
+    function getTernTypesFromString(member) {
+      var ternType = null, types = member.type.split("/");
       for (var i = 0; i < types.length; i++) {
         var t = getTernTypeFromString(types[i]);
         if (t) {
           if (ternType) {ternType+="|"} else {ternType = "";}
+          // Be a bit more clever than JSDuck and guess when a config
+          // object is passed and when so, bind it to the configuration
+          // structure associated to the class.
+          if (t === '?' && member.name === 'config' && member._constructorParamFor) {
+            t = getConfigNameForClass(member._constructorParamFor);
+            member._isConfig = true;
+          }
           ternType+=t;
         }
       }
