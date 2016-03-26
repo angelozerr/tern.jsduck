@@ -50,10 +50,10 @@
 			    var constructorMember = getConstructorMember(members);
 			    if (constructorMember) {
 				var ternMember = getTernClass(jsduckApi.name, ternDef);
-				ternMember = ternMember.prototype = {};
 				var ternType = getTernType(constructorMember, true);
 				if (ternType)
-				    ternMember["!type"] = ternType;		
+				    ternMember["!type"] = ternType;
+				ternMember = ternMember.prototype = {};
 			    }
 			    for (var i = 0; i < members.length; i++) {
 				var member = members[i];
@@ -68,7 +68,7 @@
 			    }
 			}
 		    }
-		    
+
 		    function getConstructorMember(members) {
 			for (var i = 0; i < members.length; i++) {
 			    var member = members[i];
@@ -81,8 +81,8 @@
 		    /**
              * Visit member.
              */
-		    function visitMember(member, jsduckApi, ternDef) {			
-			if (member.name != 'constructor') {			    	    
+		    function visitMember(member, jsduckApi, ternDef) {
+			if (member.name != 'constructor') {
 			    var ternClass = getTernClassOrPrototype(member, jsduckApi, ternDef);
 			    var ternMember = {};
 			    ternClass[member.name] = ternMember;
@@ -96,7 +96,7 @@
 		    function isMemberChainable(member) {
 			return getMemberProperty(member, "chainable");
 		    }
-		    
+
 		    function isMemberPrivate(member) {
 			return getMemberProperty(member, "private");
 		    }
@@ -147,7 +147,7 @@
 				    } else if (isMemberChainable(member)) {
 					fnType += ' -> !this';
 				    }
-				}				
+				}
 				return fnType;
 			    }
 			    return null;
@@ -164,9 +164,9 @@
                   ternType+=t;
                 }
               }
-		      return ternType;		      
+		      return ternType;
 		    }
-		    
+
 		    function getTernTypeFromString(type) {
 		      switch (type.toLowerCase().trim()) {
 	            case 'string':
@@ -178,16 +178,16 @@
 	            case 'object':
                   return '?';
 	            case 'array':
-                  return '[?]';                  
+                  return '[?]';
 	            case 'function':
-                  return 'fn()';	                
+                  return 'fn()';
 	             default:
 	               if (type.charAt(0) == "'") return "string";
 	               if (type.length > 2 && type.substring(type.length -2, type.length) == "[]") return "[" + getTernTypeFromString(type.substring(0, type.length -2)) + "]";
 	               return "+" + type;
-	            } 
+	            }
 		    }
-		    
+
 		    function getTernClassOrPrototype(member, jsduckApi, ternDef) {
 			var ternClass = getTernClass(member.owner, ternDef);
 			if (isMemberStatic(member, jsduckApi)) return ternClass;
