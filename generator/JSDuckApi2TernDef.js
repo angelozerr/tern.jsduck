@@ -46,13 +46,14 @@
      */
     function visitMembers(jsduckApi, ternDef, options) {
       var members = jsduckApi.members;
-      var config = {}, hasConfig = false;
+      var config, hasConfig = false;
       if (members) {
         var constructorMember = getConstructorMember(members);
         if (constructorMember) {
           // Adding expando properties
           constructorMember._isConstructor = true;
           constructorMember._className = jsduckApi.name;
+          constructorMember._extends = jsduckApi.extends;
 
           var ternMember = getTernClass(jsduckApi.name, ternDef);
           var ternType = getTernType(constructorMember);
@@ -61,14 +62,15 @@
           hasConfig = constructorMember._hasConfig;
           if (hasConfig) {
             var configName = getConfigNameForClass(jsduckApi.name);
-            ternDef['!define'][configName] = config;
+            ternDef['!define'][configName] = config = {};
           }
           ternMember.prototype = {};
+          addParentClassPrototype(ternMember, config, constructorMember);
         }
         for (var i = 0; i < members.length; i++) {
           var member = members[i];
-          if (!isMemberPrivate(member)
-              || options["private"]) {
+          if (isOwnPropertyMember(member, jsduckApi) &&
+              (!isMemberPrivate(member) || options["private"])) {
             var ternMember = visitMember(member,
                 jsduckApi, ternDef);
             if (ternMember) {
@@ -109,6 +111,20 @@
           ternMember["!type"] = ternType;
         return ternMember;
       }
+    }
+
+    function addParentClassPrototype(ternMember, config, jsdConstructorMember) {
+      var parentClass = jsdConstructorMember._extends;
+      if (parentClass && parentClass !== jsdConstructorMember._className) {
+        ternMember.prototype['!proto'] = parentClass + '.prototype';
+        if (config) {
+          config['!proto'] = getConfigNameForClass(parentClass);
+        }
+      }
+    }
+
+    function isOwnPropertyMember(member, jsduckApi) {
+      return [jsduckApi.name].concat(jsduckApi.mixins).indexOf(member.owner) !== -1;
     }
 
     function isMemberChainable(member) {
