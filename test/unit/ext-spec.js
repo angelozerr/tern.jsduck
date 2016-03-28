@@ -2,7 +2,7 @@ var
   templateUtil = require('../../tasks/template-util'),
   expect = require('chai').expect;
 
-describe('template util', function () {
+describe('template util for Ext', function () {
   var ternDef = templateUtil.generateTernDef('extjs', "5.0.0", 'Ext.json');
 
   it('should have one Ext type', function () {
@@ -68,6 +68,17 @@ describe('template util', function () {
     it('should generate complete config definitions in !define', function () {
       expect(Object.keys(tableTernDef['!define'].Ext_panel_Table_cfg))
         .to.have.length(44);
+    });
+  });
+
+  describe('for types', function () {
+    var buttonTernDef = templateUtil.generateTernDef('extjs', '5.1.1',
+        'Ext.button.Button.json');
+    it('should generate union types correctly with functions and their parameters', function () {
+      expect(buttonTernDef.Ext.button.Button.prototype)
+        .to.have.property('handler')
+        .that.has.property('!type',
+            'fn(button: +Ext.button.Button, e: +Ext.event.Event)|string');
     });
   });
 });

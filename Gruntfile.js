@@ -13,6 +13,7 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-template');
   grunt.loadNpmTasks('grunt-mocha-cli');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
   grunt.initConfig({
     'template' : template,
@@ -27,12 +28,29 @@ module.exports = function(grunt) {
           files: ['test/completion/*-spec.js']
         }
       }
+    },
+    watch: {
+      testunit: {
+        files: ['test/unit/*-spec.js', 'generator/*.js'],
+        tasks: 'test:unit'
+      },
+      testcompletion: {
+        files: ['test/completion/*-spec.js', 'generator/*.js'],
+        tasks: 'test:completion'
+      },
+      testall: {
+        files: ['test/**/*-spec.js', 'generator/*.js'],
+        tasks: 'test'
+      }
     }
   });
 
   grunt.registerTask('test:unit', ['mochacli:unit']);
-  grunt.registerTask('test:competion', ['mochacli:completion']);
+  grunt.registerTask('test:completion', ['mochacli:completion']);
   grunt.registerTask('test', ['mochacli:unit', 'mochacli:completion']);
+  grunt.registerTask('autotest:unit', ['watch:testunit']);
+  grunt.registerTask('autotest:completion', ['watch:testcompletion']);
+  grunt.registerTask('autotest', ['watch:testall']);
 
   grunt.registerTask('default', [ 'template', 'test' ]);
 };
