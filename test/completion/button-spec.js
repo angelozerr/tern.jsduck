@@ -25,6 +25,13 @@ describe('Ext.button.Button completion', function () {
             completionFor('componentLayout', 'string')
         ]);
     });
+    it('should complete constrainT->constrainTo', function () {
+      expect(completor.completeAt('constrainToInConfig'))
+        .to.containSubset([
+            // fails to get the right type
+            completionFor('constrainTo'/*, '+Ext.util.Region'*/)
+        ]);
+    });
   });
 
   describe('for properties', function () {

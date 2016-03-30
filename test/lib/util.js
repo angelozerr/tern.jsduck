@@ -74,9 +74,11 @@ Completor.prototype.completeAt = function (locationName, queryOptions) {
 };
 
 exports.completionObjectFor = function (origin, name, type) {
-  return {
+  var obj = {
     origin: origin,
     name: name,
-    type: type
   };
+  if (type)
+    obj.type = type;
+  return obj;
 };

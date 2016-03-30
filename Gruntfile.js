@@ -31,19 +31,19 @@ module.exports = function(grunt) {
     },
     watch: {
       testunit: {
-        files: ['test/unit/*-spec.js', 'generator/*.js'],
+        files: ['test/unit/*-spec.js', 'generator/*.{js,tpl}'],
         tasks: 'test:unit'
+      },
+      testcompletion: {
+        files: ['test/completion/*-spec.js', 'generator/*.{js,tpl}'],
+        tasks: 'test:completion'
       },
       testcompletionwithbuild: {
         files: ['test/completion/*-spec.js', 'generator/*.{js,tpl}'],
         tasks: ['template', 'test:completion']
       },
-      testcompletion: {
-        files: ['test/completion/*-spec.js', 'generator/*.js'],
-        tasks: 'test:completion'
-      },
       testall: {
-        files: ['test/**/*-spec.js', 'generator/*.js'],
+        files: ['test/**/*-spec.js', 'generator/*.{js,tpl}'],
         tasks: 'test'
       }
     }

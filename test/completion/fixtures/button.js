@@ -4,7 +4,8 @@ var btn = new Ext.button.Button({
     e.<complete:eventInHandler>
   },
   auto<complete:autoElInConfig>,
-  component<complete:componentInConfig>
+  component<complete:componentInConfig>,
+  constrainT<complete:constrainToInConfig>
 });
 
 btn.contentPa<complete:contentPaddingProperty>
