@@ -34,6 +34,10 @@ module.exports = function(grunt) {
         files: ['test/unit/*-spec.js', 'generator/*.js'],
         tasks: 'test:unit'
       },
+      testcompletionwithbuild: {
+        files: ['test/completion/*-spec.js', 'generator/*.{js,tpl}'],
+        tasks: ['template', 'test:completion']
+      },
       testcompletion: {
         files: ['test/completion/*-spec.js', 'generator/*.js'],
         tasks: 'test:completion'
@@ -50,6 +54,7 @@ module.exports = function(grunt) {
   grunt.registerTask('test', ['mochacli:unit', 'mochacli:completion']);
   grunt.registerTask('autotest:unit', ['watch:testunit']);
   grunt.registerTask('autotest:completion', ['watch:testcompletion']);
+  grunt.registerTask('autotest:completionwithbuild', ['watch:testcompletionwithbuild']);
   grunt.registerTask('autotest', ['watch:testall']);
 
   grunt.registerTask('default', [ 'template', 'test' ]);
