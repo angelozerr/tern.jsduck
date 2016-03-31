@@ -22,8 +22,7 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "tern": ">=0.5.0",
-    "acorn": "~0.5.0"
+    "tern": ">=0.18.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
@@ -32,6 +31,9 @@
     "grunt-contrib-watch": "^1.0.0",
     "grunt-mocha-cli": "^2.0.0",
     "grunt-template": "^0.2.3",
-    "test": ">=0.0.5"
+    "test": ">=0.0.5",
+    "codemirror": "^5.13.2",
+  	"codemirror-extension": "^0.2.0",
+  	"codemirror-javascript": "^0.2.0"
   }
 }
