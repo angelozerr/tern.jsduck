@@ -78,7 +78,7 @@ describe('template util for Ext', function () {
       expect(buttonTernDef.Ext.button.Button.prototype)
         .to.have.property('handler')
         .that.has.property('!type',
-            'fn(button: +Ext.button.Button, e: +Ext.event.Event)|string');
+            'string|fn(button: +Ext.button.Button, e: +Ext.event.Event)');
     });
   });
 });

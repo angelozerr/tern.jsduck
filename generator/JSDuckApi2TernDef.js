@@ -207,7 +207,6 @@
       for (var i = 0; i < types.length; i++) {
         var t = getTernTypeFromString(types[i], member);
         if (t) {
-          if (ternType) {ternType+="|"} else {ternType = "";}
           // Be a bit more clever than JSDuck and guess when a config
           // object is passed and when so, bind it to the configuration
           // structure associated to the class.
@@ -215,7 +214,10 @@
             t = getConfigNameForClass(member._constructorParamFor);
             member._isConfig = true;
           }
-          ternType+=t;
+          var startsWithFn = /^fn\(/.test(ternType);
+          if (!ternType) ternType = t;
+          // by waiting ternjs fix https://github.com/ternjs/tern/pull/734/files
+          else if (/^fn\(/.test(ternType)) {ternType = t + "|" + ternType} else {ternType = ternType + "|" + t} 
         }
       }
       return ternType;
