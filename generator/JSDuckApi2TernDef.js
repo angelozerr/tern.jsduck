@@ -25,7 +25,10 @@
     function createDef(name) {
       return {
         "!name" : name,
-        "!define" : {}
+        "!define" : {},
+        "!data": {
+          aliases: {}
+        }
       };
     }
 
@@ -64,6 +67,9 @@
             var configName = getConfigNameForClass(jsduckApi.name);
             ternDef['!define'][configName] = config = {};
           }
+          if (jsduckApi.aliases) {
+            addAliases(jsduckApi.name, jsduckApi.aliases, ternDef['!data'].aliases);
+          }
           ternMember.prototype = {};
           addParentClassPrototype(ternMember, config, constructorMember);
         }
@@ -96,6 +102,17 @@
 
     function getConfigNameForClass(className) {
       return className.replace(/\./g, '_') + '_cfg';
+    }
+
+    function addAliases(className, aliases, ternAliases) {
+      for (var aliasType in aliases) {
+        if (aliases.hasOwnProperty(aliasType)) {
+          ternAliases[aliasType] = ternAliases[aliasType] || {};
+          aliases[aliasType].forEach(function (alias) {
+            ternAliases[aliasType][alias] = className;
+          });
+        }
+      }
     }
 
     /**
@@ -217,7 +234,7 @@
           var startsWithFn = /^fn\(/.test(ternType);
           if (!ternType) ternType = t;
           // by waiting ternjs fix https://github.com/ternjs/tern/pull/734/files
-          else if (/^fn\(/.test(ternType)) {ternType = t + "|" + ternType} else {ternType = ternType + "|" + t} 
+          else if (/^fn\(/.test(ternType)) {ternType = t + "|" + ternType} else {ternType = ternType + "|" + t}
         }
       }
       return ternType;
