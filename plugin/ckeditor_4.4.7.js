@@ -340,6 +340,7 @@
     "!doc": "<p>Represents a DOM comment node.</p>\n\n<pre><code>var nativeNode = document.createComment( 'Example' );\nvar comment = new <a href=\"#!/api/CKEDITOR.dom.comment\" rel=\"CKEDITOR.dom.comment\" class=\"docClass\">CKEDITOR.dom.comment</a>( nativeNode );\n\nvar comment = new <a href=\"#!/api/CKEDITOR.dom.comment\" rel=\"CKEDITOR.dom.comment\" class=\"docClass\">CKEDITOR.dom.comment</a>( 'Example' );\n</code></pre>\n",
     "!type": "fn(comment: ?|string, ownerDocument?: +CKEDITOR.dom.document)",
     "prototype": {
+     "!proto": "CKEDITOR.dom.node.prototype",
      "type": {
       "!type": "number",
       "!doc": "<p>The node type. This is a constant value set to <a href=\"#!/api/CKEDITOR-property-NODE_COMMENT\" rel=\"CKEDITOR-property-NODE_COMMENT\" class=\"docClass\">CKEDITOR.NODE_COMMENT</a>.</p>\n"
@@ -350,166 +351,11 @@
      }
     }
    },
-   "domObject": {
-    "prototype": {
-     "$": {
-      "!type": "?",
-      "!doc": "<p>The native DOM object represented by this class instance.</p>\n\n<pre><code>var element = new <a href=\"#!/api/CKEDITOR.dom.element\" rel=\"CKEDITOR.dom.element\" class=\"docClass\">CKEDITOR.dom.element</a>( 'span' );\nalert( element.$.nodeType ); // '1'\n</code></pre>\n"
-     },
-     "clearCustomData": {
-      "!type": "fn() -> !this",
-      "!doc": "<p>Removes any data stored on this object.\nTo avoid memory leaks we must assure that there are no\nreferences left after the object is no longer needed.</p>\n"
-     },
-     "equals": {
-      "!type": "fn(object: ?) -> bool",
-      "!doc": "<p>Determines whether the specified object is equal to the current object.</p>\n\n<pre><code>var doc = new <a href=\"#!/api/CKEDITOR.dom.document\" rel=\"CKEDITOR.dom.document\" class=\"docClass\">CKEDITOR.dom.document</a>( document );\nalert( doc.equals( <a href=\"#!/api/CKEDITOR-property-document\" rel=\"CKEDITOR-property-document\" class=\"docClass\">CKEDITOR.document</a> ) );   // true\nalert( doc == <a href=\"#!/api/CKEDITOR-property-document\" rel=\"CKEDITOR-property-document\" class=\"docClass\">CKEDITOR.document</a> );          // false\n</code></pre>\n"
-     },
-     "getCustomData": {
-      "!type": "fn(key: string) -> ?",
-      "!doc": "<p>Gets the value set to a data slot in this object.</p>\n\n<pre><code>var element = new <a href=\"#!/api/CKEDITOR.dom.element\" rel=\"CKEDITOR.dom.element\" class=\"docClass\">CKEDITOR.dom.element</a>( 'span' );\nalert( element.getCustomData( 'hasCustomData' ) );      // e.g. 'true'\nalert( element.getCustomData( 'nonExistingKey' ) );     // null\n</code></pre>\n"
-     },
-     "getPrivate": {
-      "!type": "fn() -> ?",
-      "!doc": "<p>Get the private <code>_</code> object which is bound to the native\nDOM object using <a href=\"#!/api/CKEDITOR.dom.domObject-method-getCustomData\" rel=\"CKEDITOR.dom.domObject-method-getCustomData\" class=\"docClass\">getCustomData</a>.</p>\n\n<pre><code>var elementA = new <a href=\"#!/api/CKEDITOR.dom.element\" rel=\"CKEDITOR.dom.element\" class=\"docClass\">CKEDITOR.dom.element</a>( nativeElement );\nelementA.getPrivate().value = 1;\n...\nvar elementB = new <a href=\"#!/api/CKEDITOR.dom.element\" rel=\"CKEDITOR.dom.element\" class=\"docClass\">CKEDITOR.dom.element</a>( nativeElement );\nelementB.getPrivate().value; // 1\n</code></pre>\n"
-     },
-     "getUniqueId": {
-      "!type": "fn() -> number",
-      "!doc": "<p>Gets an ID that can be used to identify this DOM object in\nthe running session.</p>\n\n<p><strong>Note</strong>: This method does not work on text nodes prior to Internet Explorer 9.</p>\n"
-     },
-     "removeAllListeners": {
-      "!type": "fn() -> !this",
-      "!doc": "<p>Removes any listener set on this object.</p>\n\n<p>To avoid memory leaks we must assure that there are no\nreferences left after the object is no longer needed.</p>\n"
-     },
-     "removeCustomData": {
-      "!type": "fn(key: string) -> ?",
-      "!doc": "<p>Removes the value in data slot under given <code>key</code>.</p>\n"
-     },
-     "setCustomData": {
-      "!type": "fn(key: string, value: ?) -> +CKEDITOR.dom.domObject",
-      "!doc": "<p>Sets a data slot value for this object. These values are shared by all\ninstances pointing to that same DOM object.</p>\n\n<p><strong>Note:</strong> The created data slot is only guarantied to be available on this unique dom node,\nthus any wish to continue access it from other element clones (either created by\nclone node or from <code>innerHtml</code>) will fail, for such usage, please use\n<a href=\"#!/api/CKEDITOR.dom.element-method-setAttribute\" rel=\"CKEDITOR.dom.element-method-setAttribute\" class=\"docClass\">CKEDITOR.dom.element.setAttribute</a> instead.</p>\n\n<p><strong>Note</strong>: This method does not work on text nodes prior to Internet Explorer 9.</p>\n\n<pre><code>var element = new <a href=\"#!/api/CKEDITOR.dom.element\" rel=\"CKEDITOR.dom.element\" class=\"docClass\">CKEDITOR.dom.element</a>( 'span' );\nelement.setCustomData( 'hasCustomData', true );\n</code></pre>\n"
-     }
-    },
-    "!doc": "<p>Represents a DOM object. This class is not intended to be used directly. It\nserves as the base class for other classes representing specific DOM\nobjects.</p>\n",
-    "!type": "fn(nativeDomObject: ?)"
-   },
-   "node": {
-    "prototype": {
-     "appendTo": {
-      "!type": "fn(element: +CKEDITOR.dom.element) -> +CKEDITOR.dom.element",
-      "!doc": "<p>Makes this node a child of another element.</p>\n\n<pre><code>var p = new <a href=\"#!/api/CKEDITOR.dom.element\" rel=\"CKEDITOR.dom.element\" class=\"docClass\">CKEDITOR.dom.element</a>( 'p' );\nvar strong = new <a href=\"#!/api/CKEDITOR.dom.element\" rel=\"CKEDITOR.dom.element\" class=\"docClass\">CKEDITOR.dom.element</a>( 'strong' );\nstrong.appendTo( p );\n\n// Result: '&lt;p&gt;&lt;strong&gt;&lt;/strong&gt;&lt;/p&gt;'.\n</code></pre>\n"
-     },
-     "clone": {
-      "!type": "fn(includeChildren?: bool, cloneId?: bool) -> +CKEDITOR.dom.node",
-      "!doc": "<p>Clones this node.</p>\n\n<p><strong>Note</strong>: Values set by {<a href=\"#!/api/CKEDITOR.dom.node-method-setCustomData\" rel=\"CKEDITOR.dom.node-method-setCustomData\" class=\"docClass\">setCustomData</a>} will not be available in the clone.</p>\n"
-     },
-     "getAddress": {
-      "!type": "fn(normalized?: bool) -> [?]",
-      "!doc": "<p>Retrieves a uniquely identifiable tree address for this node.\nThe tree address returned is an array of integers, with each integer\nindicating a child index of a DOM node, starting from\n<code>document.documentElement</code>.</p>\n\n<p>For example, assuming <code>&lt;body&gt;</code> is the second child\nof <code>&lt;html&gt;</code> (<code>&lt;head&gt;</code> being the first),\nand we would like to address the third child under the\nfourth child of <code>&lt;body&gt;</code>, the tree address returned would be:\n<code>[1, 3, 2]</code>.</p>\n\n<p>The tree address cannot be used for finding back the DOM tree node once\nthe DOM tree structure has been modified.</p>\n"
-     },
-     "getAscendant": {
-      "!type": "fn(query: string|fn()|?, includeSelf?: bool) -> +CKEDITOR.dom.node",
-      "!doc": "<p>Gets the closest ancestor node of this node, specified by its name or using an evaluator function.</p>\n\n<pre><code>// Suppose we have the following HTML structure:\n// &lt;div id=\"outer\"&gt;&lt;div id=\"inner\"&gt;&lt;p&gt;&lt;b&gt;Some text&lt;/b&gt;&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;\n// If node == &lt;b&gt;\nascendant = node.getAscendant( 'div' );             // ascendant == &lt;div id=\"inner\"&gt;\nascendant = node.getAscendant( 'b' );               // ascendant == null\nascendant = node.getAscendant( 'b', true );         // ascendant == &lt;b&gt;\nascendant = node.getAscendant( { div:1, p:1 } );    // Searches for the first 'div' or 'p': ascendant == &lt;div id=\"inner\"&gt;\n\n// Using custom evaluator:\nascendant = node.getAscendant( function( el ) {\n    return el.getId() == 'inner';\n} );\n// ascendant == &lt;div id=\"inner\"&gt;\n</code></pre>\n"
-     },
-     "getCommonAncestor": {
-      "!type": "fn(node: ?) -> !this",
-      "!doc": "<p>@todo</p>\n"
-     },
-     "getDocument": {
-      "!type": "fn() -> +CKEDITOR.dom.document",
-      "!doc": "<p>Gets the document containing this element.</p>\n\n<pre><code>var element = CKEDITOR.document.getById( 'example' );\nalert( element.getDocument().equals( <a href=\"#!/api/CKEDITOR-property-document\" rel=\"CKEDITOR-property-document\" class=\"docClass\">CKEDITOR.document</a> ) ); // true\n</code></pre>\n"
-     },
-     "getIndex": {
-      "!type": "fn(normalized: bool) -> number",
-      "!doc": "<p>Gets the index of a node in an array of its <code>parent.childNodes</code>.\nReturns <code>-1</code> if a node does not have a parent or when the <code>normalized</code> argument is set to <code>true</code>\nand the text node is empty and will be removed during the normalization.</p>\n\n<p>Let us assume having the following <code>childNodes</code> array:</p>\n\n<pre><code>[ emptyText, element1, text, text, element2, emptyText2 ]\n\nemptyText.getIndex()            // 0\nemptyText.getIndex( true )      // -1\nelement1.getIndex();            // 1\nelement1.getIndex( true );      // 0\nelement2.getIndex();            // 4\nelement2.getIndex( true );      // 2\nemptyText2.getIndex();          // 5\nemptyText2.getIndex( true );    // -1\n</code></pre>\n"
-     },
-     "getNext": {
-      "!type": "fn(evaluator?: fn()) -> +CKEDITOR.dom.node",
-      "!doc": "<p>Gets the node that follows this element in its parent's child list.</p>\n\n<pre><code>var element = <a href=\"#!/api/CKEDITOR.dom.element-static-method-createFromHtml\" rel=\"CKEDITOR.dom.element-static-method-createFromHtml\" class=\"docClass\">CKEDITOR.dom.element.createFromHtml</a>( '&lt;div&gt;&lt;b&gt;Example&lt;/b&gt;&lt;i&gt;next&lt;/i&gt;&lt;/div&gt;' );\nvar last = element.getFirst().getNext();\nalert( last.getName() ); // 'i'\n</code></pre>\n"
-     },
-     "getNextSourceNode": {
-      "!type": "fn(startFromSibling: ?, nodeType: ?, guard: ?) -> !this",
-      "!doc": "<p>@todo</p>\n"
-     },
-     "getParent": {
-      "!type": "fn(allowFragmentParent?: bool) -> +CKEDITOR.dom.element",
-      "!doc": "<p>Gets the parent element for this node.</p>\n\n<pre><code>var node = editor.document.getBody().getFirst();\nvar parent = node.getParent();\nalert( parent.getName() ); // 'body'\n</code></pre>\n"
-     },
-     "getParents": {
-      "!type": "fn(closerFirst?: bool) -> [?]",
-      "!doc": "<p>Returns an array containing node parents and the node itself. By default nodes are in <em>descending</em> order.</p>\n\n<pre><code>// Assuming that body has paragraph as the first child.\nvar node = editor.document.getBody().getFirst();\nvar parents = node.getParents();\nalert( parents[ 0 ].getName() + ',' + parents[ 2 ].getName() ); // 'html,p'\n</code></pre>\n"
-     },
-     "getPosition": {
-      "!type": "fn(otherNode: ?) -> !this",
-      "!doc": "<p>@todo</p>\n"
-     },
-     "getPrevious": {
-      "!type": "fn(evaluator?: fn()) -> +CKEDITOR.dom.node",
-      "!doc": "<p>Gets the node that preceeds this element in its parent's child list.</p>\n\n<pre><code>var element = <a href=\"#!/api/CKEDITOR.dom.element-static-method-createFromHtml\" rel=\"CKEDITOR.dom.element-static-method-createFromHtml\" class=\"docClass\">CKEDITOR.dom.element.createFromHtml</a>( '&lt;div&gt;&lt;i&gt;prev&lt;/i&gt;&lt;b&gt;Example&lt;/b&gt;&lt;/div&gt;' );\nvar first = element.getLast().getPrev();\nalert( first.getName() ); // 'i'\n</code></pre>\n"
-     },
-     "getPreviousSourceNode": {
-      "!type": "fn(startFromSibling: ?, nodeType: ?, guard: ?) -> !this",
-      "!doc": "<p>@todo</p>\n"
-     },
-     "hasAscendant": {
-      "!type": "fn(name: ?, includeSelf: ?) -> !this",
-      "!doc": "<p>@todo</p>\n"
-     },
-     "hasNext": {
-      "!type": "fn() -> bool",
-      "!doc": "<p>Checks if the node is succeeded by any sibling.</p>\n"
-     },
-     "hasPrevious": {
-      "!type": "fn() -> bool",
-      "!doc": "<p>Checks if the node is preceded by any sibling.</p>\n"
-     },
-     "insertAfter": {
-      "!type": "fn(node: +CKEDITOR.dom.node) -> +CKEDITOR.dom.node",
-      "!doc": "<p>Inserts this element after a node.</p>\n\n<pre><code>var em = new <a href=\"#!/api/CKEDITOR.dom.element\" rel=\"CKEDITOR.dom.element\" class=\"docClass\">CKEDITOR.dom.element</a>( 'em' );\nvar strong = new <a href=\"#!/api/CKEDITOR.dom.element\" rel=\"CKEDITOR.dom.element\" class=\"docClass\">CKEDITOR.dom.element</a>( 'strong' );\nstrong.insertAfter( em );\n\n// Result: '&lt;em&gt;&lt;/em&gt;&lt;strong&gt;&lt;/strong&gt;'\n</code></pre>\n"
-     },
-     "insertBefore": {
-      "!type": "fn(node: +CKEDITOR.dom.node) -> +CKEDITOR.dom.node",
-      "!doc": "<p>Inserts this element before a node.</p>\n\n<pre><code>var em = new <a href=\"#!/api/CKEDITOR.dom.element\" rel=\"CKEDITOR.dom.element\" class=\"docClass\">CKEDITOR.dom.element</a>( 'em' );\nvar strong = new <a href=\"#!/api/CKEDITOR.dom.element\" rel=\"CKEDITOR.dom.element\" class=\"docClass\">CKEDITOR.dom.element</a>( 'strong' );\nstrong.insertBefore( em );\n\n// result: '&lt;strong&gt;&lt;/strong&gt;&lt;em&gt;&lt;/em&gt;'\n</code></pre>\n"
-     },
-     "insertBeforeMe": {
-      "!type": "fn(node: +CKEDITOR.dom.node) -> +CKEDITOR.dom.node",
-      "!doc": "<p>Inserts a node before this node.</p>\n\n<pre><code>var em = new <a href=\"#!/api/CKEDITOR.dom.element\" rel=\"CKEDITOR.dom.element\" class=\"docClass\">CKEDITOR.dom.element</a>( 'em' );\nvar strong = new <a href=\"#!/api/CKEDITOR.dom.element\" rel=\"CKEDITOR.dom.element\" class=\"docClass\">CKEDITOR.dom.element</a>( 'strong' );\nstrong.insertBeforeMe( em );\n\n// result: '&lt;em&gt;&lt;/em&gt;&lt;strong&gt;&lt;/strong&gt;'\n</code></pre>\n"
-     },
-     "isReadOnly": {
-      "!type": "fn() -> bool",
-      "!doc": "<p>Checks if this node is read-only (should not be changed).</p>\n\n<p><strong>Note:</strong> When <code>attributeCheck</code> is not used, this method only works for elements\nthat are already present in the document, otherwise the result\nis not guaranteed. It is mainly for performance consideration.</p>\n\n<pre><code>// For the following HTML:\n// &lt;div contenteditable=\"false\"&gt;Some &lt;b&gt;text&lt;/b&gt;&lt;/div&gt;\n\n// If \"ele\" is the above &lt;div&gt;\nelement.isReadOnly(); // true\n</code></pre>\n"
-     },
-     "ltrim": {
-      "!type": "fn() -> !this",
-      "!doc": "<p>@todo</p>\n"
-     },
-     "move": {
-      "!type": "fn(target: ?, toStart: ?) -> !this",
-      "!doc": "<p>@todo</p>\n"
-     },
-     "remove": {
-      "!type": "fn(preserveChildren?: bool) -> +CKEDITOR.dom.node",
-      "!doc": "<p>Removes this node from the document DOM.</p>\n\n<pre><code>var element = CKEDITOR.document.getById( 'MyElement' );\nelement.remove();\n</code></pre>\n"
-     },
-     "replace": {
-      "!type": "fn(nodeToReplace: ?) -> !this",
-      "!doc": "<p>@todo</p>\n"
-     },
-     "rtrim": {
-      "!type": "fn() -> !this",
-      "!doc": "<p>@todo</p>\n"
-     },
-     "trim": {
-      "!type": "fn() -> !this",
-      "!doc": "<p>@todo</p>\n"
-     }
-    },
-    "!doc": "<p>Base class for classes representing DOM nodes. This constructor may return\nan instance of a class that inherits from this class, like\n<a href=\"#!/api/CKEDITOR.dom.element\" rel=\"CKEDITOR.dom.element\" class=\"docClass\">CKEDITOR.dom.element</a> or <a href=\"#!/api/CKEDITOR.dom.text\" rel=\"CKEDITOR.dom.text\" class=\"docClass\">CKEDITOR.dom.text</a>.</p>\n",
-    "!type": "fn(domNode: ?)"
-   },
    "document": {
     "!doc": "<p>Represents a DOM document.</p>\n\n<pre><code>var document = new <a href=\"#!/api/CKEDITOR.dom.document\" rel=\"CKEDITOR.dom.document\" class=\"docClass\">CKEDITOR.dom.document</a>( document );\n</code></pre>\n",
     "!type": "fn(domDocument: ?)",
     "prototype": {
+     "!proto": "CKEDITOR.dom.domObject.prototype",
      "type": {
       "!type": "number",
       "!doc": "<p>The node type. This is a constant value set to <a href=\"#!/api/CKEDITOR-property-NODE_DOCUMENT\" rel=\"CKEDITOR-property-NODE_DOCUMENT\" class=\"docClass\">CKEDITOR.NODE_DOCUMENT</a>.</p>\n"
@@ -602,10 +448,53 @@
      }
     }
    },
+   "domObject": {
+    "!doc": "<p>Represents a DOM object. This class is not intended to be used directly. It\nserves as the base class for other classes representing specific DOM\nobjects.</p>\n",
+    "!type": "fn(nativeDomObject: ?)",
+    "prototype": {
+     "$": {
+      "!type": "?",
+      "!doc": "<p>The native DOM object represented by this class instance.</p>\n\n<pre><code>var element = new <a href=\"#!/api/CKEDITOR.dom.element\" rel=\"CKEDITOR.dom.element\" class=\"docClass\">CKEDITOR.dom.element</a>( 'span' );\nalert( element.$.nodeType ); // '1'\n</code></pre>\n"
+     },
+     "clearCustomData": {
+      "!type": "fn() -> !this",
+      "!doc": "<p>Removes any data stored on this object.\nTo avoid memory leaks we must assure that there are no\nreferences left after the object is no longer needed.</p>\n"
+     },
+     "equals": {
+      "!type": "fn(object: ?) -> bool",
+      "!doc": "<p>Determines whether the specified object is equal to the current object.</p>\n\n<pre><code>var doc = new <a href=\"#!/api/CKEDITOR.dom.document\" rel=\"CKEDITOR.dom.document\" class=\"docClass\">CKEDITOR.dom.document</a>( document );\nalert( doc.equals( <a href=\"#!/api/CKEDITOR-property-document\" rel=\"CKEDITOR-property-document\" class=\"docClass\">CKEDITOR.document</a> ) );   // true\nalert( doc == <a href=\"#!/api/CKEDITOR-property-document\" rel=\"CKEDITOR-property-document\" class=\"docClass\">CKEDITOR.document</a> );          // false\n</code></pre>\n"
+     },
+     "getCustomData": {
+      "!type": "fn(key: string) -> ?",
+      "!doc": "<p>Gets the value set to a data slot in this object.</p>\n\n<pre><code>var element = new <a href=\"#!/api/CKEDITOR.dom.element\" rel=\"CKEDITOR.dom.element\" class=\"docClass\">CKEDITOR.dom.element</a>( 'span' );\nalert( element.getCustomData( 'hasCustomData' ) );      // e.g. 'true'\nalert( element.getCustomData( 'nonExistingKey' ) );     // null\n</code></pre>\n"
+     },
+     "getPrivate": {
+      "!type": "fn() -> ?",
+      "!doc": "<p>Get the private <code>_</code> object which is bound to the native\nDOM object using <a href=\"#!/api/CKEDITOR.dom.domObject-method-getCustomData\" rel=\"CKEDITOR.dom.domObject-method-getCustomData\" class=\"docClass\">getCustomData</a>.</p>\n\n<pre><code>var elementA = new <a href=\"#!/api/CKEDITOR.dom.element\" rel=\"CKEDITOR.dom.element\" class=\"docClass\">CKEDITOR.dom.element</a>( nativeElement );\nelementA.getPrivate().value = 1;\n...\nvar elementB = new <a href=\"#!/api/CKEDITOR.dom.element\" rel=\"CKEDITOR.dom.element\" class=\"docClass\">CKEDITOR.dom.element</a>( nativeElement );\nelementB.getPrivate().value; // 1\n</code></pre>\n"
+     },
+     "getUniqueId": {
+      "!type": "fn() -> number",
+      "!doc": "<p>Gets an ID that can be used to identify this DOM object in\nthe running session.</p>\n\n<p><strong>Note</strong>: This method does not work on text nodes prior to Internet Explorer 9.</p>\n"
+     },
+     "removeAllListeners": {
+      "!type": "fn() -> !this",
+      "!doc": "<p>Removes any listener set on this object.</p>\n\n<p>To avoid memory leaks we must assure that there are no\nreferences left after the object is no longer needed.</p>\n"
+     },
+     "removeCustomData": {
+      "!type": "fn(key: string) -> ?",
+      "!doc": "<p>Removes the value in data slot under given <code>key</code>.</p>\n"
+     },
+     "setCustomData": {
+      "!type": "fn(key: string, value: ?) -> +CKEDITOR.dom.domObject",
+      "!doc": "<p>Sets a data slot value for this object. These values are shared by all\ninstances pointing to that same DOM object.</p>\n\n<p><strong>Note:</strong> The created data slot is only guarantied to be available on this unique dom node,\nthus any wish to continue access it from other element clones (either created by\nclone node or from <code>innerHtml</code>) will fail, for such usage, please use\n<a href=\"#!/api/CKEDITOR.dom.element-method-setAttribute\" rel=\"CKEDITOR.dom.element-method-setAttribute\" class=\"docClass\">CKEDITOR.dom.element.setAttribute</a> instead.</p>\n\n<p><strong>Note</strong>: This method does not work on text nodes prior to Internet Explorer 9.</p>\n\n<pre><code>var element = new <a href=\"#!/api/CKEDITOR.dom.element\" rel=\"CKEDITOR.dom.element\" class=\"docClass\">CKEDITOR.dom.element</a>( 'span' );\nelement.setCustomData( 'hasCustomData', true );\n</code></pre>\n"
+     }
+    }
+   },
    "element": {
     "!doc": "<p>Represents a DOM element.</p>\n\n<pre><code>// Create a new &lt;span&gt; element.\nvar element = new <a href=\"#!/api/CKEDITOR.dom.element\" rel=\"CKEDITOR.dom.element\" class=\"docClass\">CKEDITOR.dom.element</a>( 'span' );\n\n// Create an element based on a native DOM element.\nvar element = new <a href=\"#!/api/CKEDITOR.dom.element\" rel=\"CKEDITOR.dom.element\" class=\"docClass\">CKEDITOR.dom.element</a>( document.getElementById( 'myId' ) );\n</code></pre>\n",
     "!type": "fn(element: ?|string, ownerDocument?: +CKEDITOR.dom.document)",
     "prototype": {
+     "!proto": "CKEDITOR.dom.node.prototype",
      "type": {
       "!type": "number",
       "!doc": "<p>The node type. This is a constant value set to <a href=\"#!/api/CKEDITOR-property-NODE_ELEMENT\" rel=\"CKEDITOR-property-NODE_ELEMENT\" class=\"docClass\">CKEDITOR.NODE_ELEMENT</a>.</p>\n"
@@ -1036,6 +925,121 @@
      }
     }
    },
+   "node": {
+    "!doc": "<p>Base class for classes representing DOM nodes. This constructor may return\nan instance of a class that inherits from this class, like\n<a href=\"#!/api/CKEDITOR.dom.element\" rel=\"CKEDITOR.dom.element\" class=\"docClass\">CKEDITOR.dom.element</a> or <a href=\"#!/api/CKEDITOR.dom.text\" rel=\"CKEDITOR.dom.text\" class=\"docClass\">CKEDITOR.dom.text</a>.</p>\n",
+    "!type": "fn(domNode: ?)",
+    "prototype": {
+     "!proto": "CKEDITOR.dom.domObject.prototype",
+     "appendTo": {
+      "!type": "fn(element: +CKEDITOR.dom.element) -> +CKEDITOR.dom.element",
+      "!doc": "<p>Makes this node a child of another element.</p>\n\n<pre><code>var p = new <a href=\"#!/api/CKEDITOR.dom.element\" rel=\"CKEDITOR.dom.element\" class=\"docClass\">CKEDITOR.dom.element</a>( 'p' );\nvar strong = new <a href=\"#!/api/CKEDITOR.dom.element\" rel=\"CKEDITOR.dom.element\" class=\"docClass\">CKEDITOR.dom.element</a>( 'strong' );\nstrong.appendTo( p );\n\n// Result: '&lt;p&gt;&lt;strong&gt;&lt;/strong&gt;&lt;/p&gt;'.\n</code></pre>\n"
+     },
+     "clone": {
+      "!type": "fn(includeChildren?: bool, cloneId?: bool) -> +CKEDITOR.dom.node",
+      "!doc": "<p>Clones this node.</p>\n\n<p><strong>Note</strong>: Values set by {<a href=\"#!/api/CKEDITOR.dom.node-method-setCustomData\" rel=\"CKEDITOR.dom.node-method-setCustomData\" class=\"docClass\">setCustomData</a>} will not be available in the clone.</p>\n"
+     },
+     "getAddress": {
+      "!type": "fn(normalized?: bool) -> [?]",
+      "!doc": "<p>Retrieves a uniquely identifiable tree address for this node.\nThe tree address returned is an array of integers, with each integer\nindicating a child index of a DOM node, starting from\n<code>document.documentElement</code>.</p>\n\n<p>For example, assuming <code>&lt;body&gt;</code> is the second child\nof <code>&lt;html&gt;</code> (<code>&lt;head&gt;</code> being the first),\nand we would like to address the third child under the\nfourth child of <code>&lt;body&gt;</code>, the tree address returned would be:\n<code>[1, 3, 2]</code>.</p>\n\n<p>The tree address cannot be used for finding back the DOM tree node once\nthe DOM tree structure has been modified.</p>\n"
+     },
+     "getAscendant": {
+      "!type": "fn(query: string|fn()|?, includeSelf?: bool) -> +CKEDITOR.dom.node",
+      "!doc": "<p>Gets the closest ancestor node of this node, specified by its name or using an evaluator function.</p>\n\n<pre><code>// Suppose we have the following HTML structure:\n// &lt;div id=\"outer\"&gt;&lt;div id=\"inner\"&gt;&lt;p&gt;&lt;b&gt;Some text&lt;/b&gt;&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;\n// If node == &lt;b&gt;\nascendant = node.getAscendant( 'div' );             // ascendant == &lt;div id=\"inner\"&gt;\nascendant = node.getAscendant( 'b' );               // ascendant == null\nascendant = node.getAscendant( 'b', true );         // ascendant == &lt;b&gt;\nascendant = node.getAscendant( { div:1, p:1 } );    // Searches for the first 'div' or 'p': ascendant == &lt;div id=\"inner\"&gt;\n\n// Using custom evaluator:\nascendant = node.getAscendant( function( el ) {\n    return el.getId() == 'inner';\n} );\n// ascendant == &lt;div id=\"inner\"&gt;\n</code></pre>\n"
+     },
+     "getCommonAncestor": {
+      "!type": "fn(node: ?) -> !this",
+      "!doc": "<p>@todo</p>\n"
+     },
+     "getDocument": {
+      "!type": "fn() -> +CKEDITOR.dom.document",
+      "!doc": "<p>Gets the document containing this element.</p>\n\n<pre><code>var element = CKEDITOR.document.getById( 'example' );\nalert( element.getDocument().equals( <a href=\"#!/api/CKEDITOR-property-document\" rel=\"CKEDITOR-property-document\" class=\"docClass\">CKEDITOR.document</a> ) ); // true\n</code></pre>\n"
+     },
+     "getIndex": {
+      "!type": "fn(normalized: bool) -> number",
+      "!doc": "<p>Gets the index of a node in an array of its <code>parent.childNodes</code>.\nReturns <code>-1</code> if a node does not have a parent or when the <code>normalized</code> argument is set to <code>true</code>\nand the text node is empty and will be removed during the normalization.</p>\n\n<p>Let us assume having the following <code>childNodes</code> array:</p>\n\n<pre><code>[ emptyText, element1, text, text, element2, emptyText2 ]\n\nemptyText.getIndex()            // 0\nemptyText.getIndex( true )      // -1\nelement1.getIndex();            // 1\nelement1.getIndex( true );      // 0\nelement2.getIndex();            // 4\nelement2.getIndex( true );      // 2\nemptyText2.getIndex();          // 5\nemptyText2.getIndex( true );    // -1\n</code></pre>\n"
+     },
+     "getNext": {
+      "!type": "fn(evaluator?: fn()) -> +CKEDITOR.dom.node",
+      "!doc": "<p>Gets the node that follows this element in its parent's child list.</p>\n\n<pre><code>var element = <a href=\"#!/api/CKEDITOR.dom.element-static-method-createFromHtml\" rel=\"CKEDITOR.dom.element-static-method-createFromHtml\" class=\"docClass\">CKEDITOR.dom.element.createFromHtml</a>( '&lt;div&gt;&lt;b&gt;Example&lt;/b&gt;&lt;i&gt;next&lt;/i&gt;&lt;/div&gt;' );\nvar last = element.getFirst().getNext();\nalert( last.getName() ); // 'i'\n</code></pre>\n"
+     },
+     "getNextSourceNode": {
+      "!type": "fn(startFromSibling: ?, nodeType: ?, guard: ?) -> !this",
+      "!doc": "<p>@todo</p>\n"
+     },
+     "getParent": {
+      "!type": "fn(allowFragmentParent?: bool) -> +CKEDITOR.dom.element",
+      "!doc": "<p>Gets the parent element for this node.</p>\n\n<pre><code>var node = editor.document.getBody().getFirst();\nvar parent = node.getParent();\nalert( parent.getName() ); // 'body'\n</code></pre>\n"
+     },
+     "getParents": {
+      "!type": "fn(closerFirst?: bool) -> [?]",
+      "!doc": "<p>Returns an array containing node parents and the node itself. By default nodes are in <em>descending</em> order.</p>\n\n<pre><code>// Assuming that body has paragraph as the first child.\nvar node = editor.document.getBody().getFirst();\nvar parents = node.getParents();\nalert( parents[ 0 ].getName() + ',' + parents[ 2 ].getName() ); // 'html,p'\n</code></pre>\n"
+     },
+     "getPosition": {
+      "!type": "fn(otherNode: ?) -> !this",
+      "!doc": "<p>@todo</p>\n"
+     },
+     "getPrevious": {
+      "!type": "fn(evaluator?: fn()) -> +CKEDITOR.dom.node",
+      "!doc": "<p>Gets the node that preceeds this element in its parent's child list.</p>\n\n<pre><code>var element = <a href=\"#!/api/CKEDITOR.dom.element-static-method-createFromHtml\" rel=\"CKEDITOR.dom.element-static-method-createFromHtml\" class=\"docClass\">CKEDITOR.dom.element.createFromHtml</a>( '&lt;div&gt;&lt;i&gt;prev&lt;/i&gt;&lt;b&gt;Example&lt;/b&gt;&lt;/div&gt;' );\nvar first = element.getLast().getPrev();\nalert( first.getName() ); // 'i'\n</code></pre>\n"
+     },
+     "getPreviousSourceNode": {
+      "!type": "fn(startFromSibling: ?, nodeType: ?, guard: ?) -> !this",
+      "!doc": "<p>@todo</p>\n"
+     },
+     "hasAscendant": {
+      "!type": "fn(name: ?, includeSelf: ?) -> !this",
+      "!doc": "<p>@todo</p>\n"
+     },
+     "hasNext": {
+      "!type": "fn() -> bool",
+      "!doc": "<p>Checks if the node is succeeded by any sibling.</p>\n"
+     },
+     "hasPrevious": {
+      "!type": "fn() -> bool",
+      "!doc": "<p>Checks if the node is preceded by any sibling.</p>\n"
+     },
+     "insertAfter": {
+      "!type": "fn(node: +CKEDITOR.dom.node) -> +CKEDITOR.dom.node",
+      "!doc": "<p>Inserts this element after a node.</p>\n\n<pre><code>var em = new <a href=\"#!/api/CKEDITOR.dom.element\" rel=\"CKEDITOR.dom.element\" class=\"docClass\">CKEDITOR.dom.element</a>( 'em' );\nvar strong = new <a href=\"#!/api/CKEDITOR.dom.element\" rel=\"CKEDITOR.dom.element\" class=\"docClass\">CKEDITOR.dom.element</a>( 'strong' );\nstrong.insertAfter( em );\n\n// Result: '&lt;em&gt;&lt;/em&gt;&lt;strong&gt;&lt;/strong&gt;'\n</code></pre>\n"
+     },
+     "insertBefore": {
+      "!type": "fn(node: +CKEDITOR.dom.node) -> +CKEDITOR.dom.node",
+      "!doc": "<p>Inserts this element before a node.</p>\n\n<pre><code>var em = new <a href=\"#!/api/CKEDITOR.dom.element\" rel=\"CKEDITOR.dom.element\" class=\"docClass\">CKEDITOR.dom.element</a>( 'em' );\nvar strong = new <a href=\"#!/api/CKEDITOR.dom.element\" rel=\"CKEDITOR.dom.element\" class=\"docClass\">CKEDITOR.dom.element</a>( 'strong' );\nstrong.insertBefore( em );\n\n// result: '&lt;strong&gt;&lt;/strong&gt;&lt;em&gt;&lt;/em&gt;'\n</code></pre>\n"
+     },
+     "insertBeforeMe": {
+      "!type": "fn(node: +CKEDITOR.dom.node) -> +CKEDITOR.dom.node",
+      "!doc": "<p>Inserts a node before this node.</p>\n\n<pre><code>var em = new <a href=\"#!/api/CKEDITOR.dom.element\" rel=\"CKEDITOR.dom.element\" class=\"docClass\">CKEDITOR.dom.element</a>( 'em' );\nvar strong = new <a href=\"#!/api/CKEDITOR.dom.element\" rel=\"CKEDITOR.dom.element\" class=\"docClass\">CKEDITOR.dom.element</a>( 'strong' );\nstrong.insertBeforeMe( em );\n\n// result: '&lt;em&gt;&lt;/em&gt;&lt;strong&gt;&lt;/strong&gt;'\n</code></pre>\n"
+     },
+     "isReadOnly": {
+      "!type": "fn() -> bool",
+      "!doc": "<p>Checks if this node is read-only (should not be changed).</p>\n\n<p><strong>Note:</strong> When <code>attributeCheck</code> is not used, this method only works for elements\nthat are already present in the document, otherwise the result\nis not guaranteed. It is mainly for performance consideration.</p>\n\n<pre><code>// For the following HTML:\n// &lt;div contenteditable=\"false\"&gt;Some &lt;b&gt;text&lt;/b&gt;&lt;/div&gt;\n\n// If \"ele\" is the above &lt;div&gt;\nelement.isReadOnly(); // true\n</code></pre>\n"
+     },
+     "ltrim": {
+      "!type": "fn() -> !this",
+      "!doc": "<p>@todo</p>\n"
+     },
+     "move": {
+      "!type": "fn(target: ?, toStart: ?) -> !this",
+      "!doc": "<p>@todo</p>\n"
+     },
+     "remove": {
+      "!type": "fn(preserveChildren?: bool) -> +CKEDITOR.dom.node",
+      "!doc": "<p>Removes this node from the document DOM.</p>\n\n<pre><code>var element = CKEDITOR.document.getById( 'MyElement' );\nelement.remove();\n</code></pre>\n"
+     },
+     "replace": {
+      "!type": "fn(nodeToReplace: ?) -> !this",
+      "!doc": "<p>@todo</p>\n"
+     },
+     "rtrim": {
+      "!type": "fn() -> !this",
+      "!doc": "<p>@todo</p>\n"
+     },
+     "trim": {
+      "!type": "fn() -> !this",
+      "!doc": "<p>@todo</p>\n"
+     }
+    }
+   },
    "nodeList": {
     "!doc": "<p>Represents a list of <a href=\"#!/api/CKEDITOR.dom.node\" rel=\"CKEDITOR.dom.node\" class=\"docClass\">CKEDITOR.dom.node</a> objects.\nIt's a wrapper for native nodes list.</p>\n\n<pre><code>var nodeList = CKEDITOR.document.getBody().getChildren();\nalert( nodeList.count() ); // number [0;N]\n</code></pre>\n",
     "!type": "fn(nativeList: ?)",
@@ -1299,6 +1303,7 @@
     "!doc": "<p>Represents a list os <a href=\"#!/api/CKEDITOR.dom.range\" rel=\"CKEDITOR.dom.range\" class=\"docClass\">CKEDITOR.dom.range</a> objects, which can be easily\niterated sequentially.</p>\n",
     "!type": "fn(ranges?: +CKEDITOR.dom.range|[+CKEDITOR.dom.range])",
     "prototype": {
+     "!proto": "Array.prototype",
      "createBookmarks": {
       "!type": "fn(serializable?: bool) -> [?]",
       "!doc": "<p>Create bookmarks for all ranges. See <a href=\"#!/api/CKEDITOR.dom.range-method-createBookmark\" rel=\"CKEDITOR.dom.range-method-createBookmark\" class=\"docClass\">CKEDITOR.dom.range.createBookmark</a>.</p>\n"
@@ -1432,6 +1437,7 @@
     "!doc": "<p>Represents a DOM text node.</p>\n\n<pre><code>var nativeNode = document.createTextNode( 'Example' );\nvar text = <a href=\"#!/api/CKEDITOR.dom.text\" rel=\"CKEDITOR.dom.text\" class=\"docClass\">CKEDITOR.dom.text</a>( nativeNode );\n\nvar text = <a href=\"#!/api/CKEDITOR.dom.text\" rel=\"CKEDITOR.dom.text\" class=\"docClass\">CKEDITOR.dom.text</a>( 'Example' );\n</code></pre>\n",
     "!type": "fn(text: ?|string, ownerDocument?: +CKEDITOR.dom.document)",
     "prototype": {
+     "!proto": "CKEDITOR.dom.node.prototype",
      "type": {
       "!type": "number",
       "!doc": "<p>The node type. This is a constant value set to <a href=\"#!/api/CKEDITOR-property-NODE_TEXT\" rel=\"CKEDITOR-property-NODE_TEXT\" class=\"docClass\">CKEDITOR.NODE_TEXT</a>.</p>\n"
@@ -1551,6 +1557,7 @@
     "!doc": "<p>Represents a DOM window.</p>\n\n<pre><code>var document = new <a href=\"#!/api/CKEDITOR.dom.window\" rel=\"CKEDITOR.dom.window\" class=\"docClass\">CKEDITOR.dom.window</a>( window );\n</code></pre>\n",
     "!type": "fn(domWindow: ?)",
     "prototype": {
+     "!proto": "CKEDITOR.dom.domObject.prototype",
      "focus": {
       "!type": "fn() -> !this",
       "!doc": "<p>Moves the selection focus to this window.</p>\n\n<pre><code>var win = new <a href=\"#!/api/CKEDITOR.dom.window\" rel=\"CKEDITOR.dom.window\" class=\"docClass\">CKEDITOR.dom.window</a>( window );\nwin.focus();\n</code></pre>\n"
@@ -1641,6 +1648,7 @@
    "!doc": "<p>Editable class which provides all editing related activities by\nthe <code>contenteditable</code> element, dynamically get attached to editor instance.</p>\n",
    "!type": "fn(editor: +CKEDITOR.editor, element: +HTMLElement|+CKEDITOR.dom.element)",
    "prototype": {
+    "!proto": "CKEDITOR.dom.element.prototype",
     "hasFocus": {
      "!type": "bool",
      "!doc": "<p>Indicates whether the editable element gained focus.</p>\n"
@@ -2453,6 +2461,7 @@
    "!doc": "<p>Represents an HTML data processor, which is responsible for translating and\ntransforming the editor data on input and output.</p>\n",
    "!type": "fn(editor: +CKEDITOR.editor)",
    "prototype": {
+    "!proto": "CKEDITOR.dataProcessor.prototype",
     "dataFilter": {
      "!type": "+CKEDITOR.htmlParser.filter",
      "!doc": "<p>Data filter used when processing input by <a href=\"#!/api/CKEDITOR.htmlDataProcessor-method-toHtml\" rel=\"CKEDITOR.htmlDataProcessor-method-toHtml\" class=\"docClass\">toHtml</a>.</p>\n"
@@ -2522,6 +2531,7 @@
     "!doc": "<p>A lightweight representation of HTML CDATA.</p>\n",
     "!type": "fn(value: string)",
     "prototype": {
+     "!proto": "CKEDITOR.htmlParser.node.prototype",
      "type": {
       "!type": "number",
       "!doc": "<p>CDATA has the same type as <a href=\"#!/api/CKEDITOR.htmlParser.text\" rel=\"CKEDITOR.htmlParser.text\" class=\"docClass\">CKEDITOR.htmlParser.text</a> This is\na constant value set to <a href=\"#!/api/CKEDITOR-property-NODE_TEXT\" rel=\"CKEDITOR-property-NODE_TEXT\" class=\"docClass\">CKEDITOR.NODE_TEXT</a>.</p>\n"
@@ -2536,44 +2546,11 @@
      }
     }
    },
-   "node": {
-    "prototype": {
-     "getAscendant": {
-      "!type": "fn(condition: string|?|fn()) -> +CKEDITOR.htmlParser.element",
-      "!doc": "<p>Gets the closest ancestor element of this element which satisfies given condition</p>\n"
-     },
-     "getIndex": {
-      "!type": "fn() -> number",
-      "!doc": "<p>Gets this node's index in its parent's children array.</p>\n"
-     },
-     "insertAfter": {
-      "!type": "fn(node: +CKEDITOR.htmlParser.node) -> !this",
-      "!doc": "<p>Insert this node after given one.</p>\n"
-     },
-     "insertBefore": {
-      "!type": "fn(node: +CKEDITOR.htmlParser.node) -> !this",
-      "!doc": "<p>Insert this node before given one.</p>\n"
-     },
-     "remove": {
-      "!type": "fn() -> !this",
-      "!doc": "<p>Remove this node from a tree.</p>\n"
-     },
-     "replaceWith": {
-      "!type": "fn(node: +CKEDITOR.htmlParser.node) -> !this",
-      "!doc": "<p>Replace this node with given one.</p>\n"
-     },
-     "wrapWith": {
-      "!type": "fn(wrapper: +CKEDITOR.htmlParser.element) -> +CKEDITOR.htmlParser.element",
-      "!doc": "<p>Wraps this element with given <code>wrapper</code>.</p>\n"
-     }
-    },
-    "!doc": "<p>A lightweight representation of HTML node.</p>\n",
-    "!type": "fn()"
-   },
    "comment": {
     "!doc": "<p>A lightweight representation of an HTML comment.</p>\n",
     "!type": "fn(value: string)",
     "prototype": {
+     "!proto": "CKEDITOR.htmlParser.node.prototype",
      "_": {
       "!type": "?"
      },
@@ -2613,6 +2590,7 @@
     "!doc": "<p>A lightweight representation of an HTML element.</p>\n",
     "!type": "fn(name: string, attributes: ?)",
     "prototype": {
+     "!proto": "CKEDITOR.htmlParser.node.prototype",
      "_": {
       "!type": "?"
      },
@@ -2851,10 +2829,45 @@
      "!doc": "<p>Parses text, looking for HTML tokens, like tag openers or closers,\nor comments. This function fires the onTagOpen, onTagClose, onText\nand onComment function during its execution.</p>\n\n<pre><code>var parser = new <a href=\"#!/api/CKEDITOR.htmlParser\" rel=\"CKEDITOR.htmlParser\" class=\"docClass\">CKEDITOR.htmlParser</a>();\n// The onTagOpen, onTagClose, onText and onComment should be overriden\n// at this point.\nparser.parse( '&lt;!-- Example --&gt;&lt;b&gt;Hello&lt;/b&gt;' );\n</code></pre>\n"
     }
    },
+   "node": {
+    "!doc": "<p>A lightweight representation of HTML node.</p>\n",
+    "!type": "fn()",
+    "prototype": {
+     "getAscendant": {
+      "!type": "fn(condition: string|?|fn()) -> +CKEDITOR.htmlParser.element",
+      "!doc": "<p>Gets the closest ancestor element of this element which satisfies given condition</p>\n"
+     },
+     "getIndex": {
+      "!type": "fn() -> number",
+      "!doc": "<p>Gets this node's index in its parent's children array.</p>\n"
+     },
+     "insertAfter": {
+      "!type": "fn(node: +CKEDITOR.htmlParser.node) -> !this",
+      "!doc": "<p>Insert this node after given one.</p>\n"
+     },
+     "insertBefore": {
+      "!type": "fn(node: +CKEDITOR.htmlParser.node) -> !this",
+      "!doc": "<p>Insert this node before given one.</p>\n"
+     },
+     "remove": {
+      "!type": "fn() -> !this",
+      "!doc": "<p>Remove this node from a tree.</p>\n"
+     },
+     "replaceWith": {
+      "!type": "fn(node: +CKEDITOR.htmlParser.node) -> !this",
+      "!doc": "<p>Replace this node with given one.</p>\n"
+     },
+     "wrapWith": {
+      "!type": "fn(wrapper: +CKEDITOR.htmlParser.element) -> +CKEDITOR.htmlParser.element",
+      "!doc": "<p>Wraps this element with given <code>wrapper</code>.</p>\n"
+     }
+    }
+   },
    "text": {
     "!doc": "<p>A lightweight representation of HTML text.</p>\n",
     "!type": "fn(value: string)",
     "prototype": {
+     "!proto": "CKEDITOR.htmlParser.node.prototype",
      "_": {
       "!type": "?"
      },
@@ -3250,60 +3263,15 @@
   "plugins": {
    "!doc": "<p>Manages plugins registration and loading.</p>\n",
    "!type": "fn(basePath: string, fileName: string)",
-   "prototype": {},
+   "prototype": {
+    "!proto": "CKEDITOR.resourceManager.prototype"
+   },
    "setLang": {
     "!type": "fn(pluginName: string, languageCode: string, languageEntries: ?) -> !this",
     "!doc": "<p>Loads a specific language file, or auto detect it. A callback is\nthen called when the file gets loaded.</p>\n\n<pre><code><a href=\"#!/api/CKEDITOR.plugins-method-setLang\" rel=\"CKEDITOR.plugins-method-setLang\" class=\"docClass\">CKEDITOR.plugins.setLang</a>( 'myPlugin', 'en', {\n    title: 'My plugin',\n    selectOption: 'Please select an option'\n} );\n</code></pre>\n"
    }
   },
   "resourceManager": {
-   "_": {
-    "!type": "?"
-   },
-   "basePath": {
-    "!type": "string",
-    "!doc": "<p>The base directory containing all resources.</p>\n"
-   },
-   "externals": {
-    "!type": "?",
-    "!doc": "<p>Contains references to all resources that have already been registered\nwith <a href=\"#!/api/CKEDITOR.resourceManager-method-addExternal\" rel=\"CKEDITOR.resourceManager-method-addExternal\" class=\"docClass\">addExternal</a>.</p>\n"
-   },
-   "fileName": {
-    "!type": "string",
-    "!doc": "<p>The name used for resource files.</p>\n"
-   },
-   "loaded": {
-    "!type": "?",
-    "!doc": "<p>Contains references to all resources that have already been loaded\nwith <a href=\"#!/api/CKEDITOR.resourceManager-method-load\" rel=\"CKEDITOR.resourceManager-method-load\" class=\"docClass\">load</a>.</p>\n"
-   },
-   "registered": {
-    "!type": "?",
-    "!doc": "<p>Contains references to all resources that have already been registered\nwith <a href=\"#!/api/CKEDITOR.resourceManager-method-add\" rel=\"CKEDITOR.resourceManager-method-add\" class=\"docClass\">add</a>.</p>\n"
-   },
-   "add": {
-    "!type": "fn(name: string, definition?: ?) -> !this",
-    "!doc": "<p>Registers a resource.</p>\n\n<pre><code><a href=\"#!/api/CKEDITOR.plugins-method-add\" rel=\"CKEDITOR.plugins-method-add\" class=\"docClass\">CKEDITOR.plugins.add</a>( 'sample', { ... plugin definition ... } );\n</code></pre>\n"
-   },
-   "addExternal": {
-    "!type": "fn(names: string, path: string, fileName?: string) -> !this",
-    "!doc": "<p>Registers one or more resources to be loaded from an external path\ninstead of the core base path.</p>\n\n<pre><code>// Loads a plugin from '/myplugin/samples/plugin.js'.\n<a href=\"#!/api/CKEDITOR.plugins-method-addExternal\" rel=\"CKEDITOR.plugins-method-addExternal\" class=\"docClass\">CKEDITOR.plugins.addExternal</a>( 'sample', '/myplugins/sample/' );\n\n// Loads a plugin from '/myplugin/samples/my_plugin.js'.\n<a href=\"#!/api/CKEDITOR.plugins-method-addExternal\" rel=\"CKEDITOR.plugins-method-addExternal\" class=\"docClass\">CKEDITOR.plugins.addExternal</a>( 'sample', '/myplugins/sample/', 'my_plugin.js' );\n\n// Loads a plugin from '/myplugin/samples/my_plugin.js'.\n<a href=\"#!/api/CKEDITOR.plugins-method-addExternal\" rel=\"CKEDITOR.plugins-method-addExternal\" class=\"docClass\">CKEDITOR.plugins.addExternal</a>( 'sample', '/myplugins/sample/my_plugin.js', '' );\n</code></pre>\n"
-   },
-   "get": {
-    "!type": "fn(name: string) -> ?",
-    "!doc": "<p>Gets the definition of a specific resource.</p>\n\n<pre><code>var definition = <a href=\"#!/api/CKEDITOR.plugins-method-get\" rel=\"CKEDITOR.plugins-method-get\" class=\"docClass\">CKEDITOR.plugins.get</a>( 'sample' );\n</code></pre>\n"
-   },
-   "getFilePath": {
-    "!type": "fn(name: string) -> string",
-    "!doc": "<p>Get the file path for a specific loaded resource.</p>\n\n<pre><code>alert( <a href=\"#!/api/CKEDITOR.plugins-method-getFilePath\" rel=\"CKEDITOR.plugins-method-getFilePath\" class=\"docClass\">CKEDITOR.plugins.getFilePath</a>( 'sample' ) ); // '&lt;editor path&gt;/plugins/sample/plugin.js'\n</code></pre>\n"
-   },
-   "getPath": {
-    "!type": "fn(name: string) -> string",
-    "!doc": "<p>Get the folder path for a specific loaded resource.</p>\n\n<pre><code>alert( <a href=\"#!/api/CKEDITOR.plugins-method-getPath\" rel=\"CKEDITOR.plugins-method-getPath\" class=\"docClass\">CKEDITOR.plugins.getPath</a>( 'sample' ) ); // '&lt;editor path&gt;/plugins/sample/'\n</code></pre>\n"
-   },
-   "load": {
-    "!type": "fn(name: string|[?], callback: fn(), scope?: ?) -> !this",
-    "!doc": "<p>Loads one or more resources.</p>\n\n<pre><code><a href=\"#!/api/CKEDITOR.plugins-method-load\" rel=\"CKEDITOR.plugins-method-load\" class=\"docClass\">CKEDITOR.plugins.load</a>( 'myplugin', function( plugins ) {\n    alert( plugins[ 'myplugin' ] ); // object\n} );\n</code></pre>\n"
-   },
    "!doc": "<p>Base class for resource managers, like plugins. This class is not\nintended to be used out of the CKEditor core code.</p>\n",
    "!type": "fn(basePath: string, fileName: string)",
    "prototype": {
@@ -3491,7 +3459,9 @@
   "stylesSet": {
    "!doc": "<p>Manages styles registration and loading. See also <a href=\"#!/api/CKEDITOR.config-cfg-stylesSet\" rel=\"CKEDITOR.config-cfg-stylesSet\" class=\"docClass\">CKEDITOR.config.stylesSet</a>.</p>\n\n<pre><code>// The set of styles for the &lt;b&gt;Styles&lt;/b&gt; drop-down list.\n<a href=\"#!/api/CKEDITOR.stylesSet-method-add\" rel=\"CKEDITOR.stylesSet-method-add\" class=\"docClass\">CKEDITOR.stylesSet.add</a>( 'default', [\n    // Block Styles\n    { name: 'Blue Title',       element: 'h3',      styles: { 'color': 'Blue' } },\n    { name: 'Red Title',        element: 'h3',      styles: { 'color': 'Red' } },\n\n    // Inline Styles\n    { name: 'Marker: Yellow',   element: 'span',    styles: { 'background-color': 'Yellow' } },\n    { name: 'Marker: Green',    element: 'span',    styles: { 'background-color': 'Lime' } },\n\n    // Object Styles\n    {\n        name: 'Image on Left',\n        element: 'img',\n        attributes: {\n            style: 'padding: 5px; margin-right: 5px',\n            border: '2',\n            align: 'left'\n        }\n    }\n] );\n</code></pre>\n",
    "!type": "fn(basePath: string, fileName: string)",
-   "prototype": {}
+   "prototype": {
+    "!proto": "CKEDITOR.resourceManager.prototype"
+   }
   },
   "template": {
    "!doc": "<p>Lightweight template used to build the output string from variables.</p>\n\n<pre><code>// HTML template for presenting a label UI.\nvar tpl = new <a href=\"#!/api/CKEDITOR.template\" rel=\"CKEDITOR.template\" class=\"docClass\">CKEDITOR.template</a>( '&lt;div class=\"{cls}\"&gt;{label}&lt;/div&gt;' );\nalert( tpl.output( { cls: 'cke-label', label: 'foo'} ) ); // '&lt;div class=\"cke-label\"&gt;foo&lt;/div&gt;'\n</code></pre>\n",

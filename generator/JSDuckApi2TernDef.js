@@ -46,13 +46,14 @@
      */
     function visitMembers(jsduckApi, ternDef, options) {
       var members = jsduckApi.members;
-      var config = {}, hasConfig = false;
+      var config, hasConfig = false;
       if (members) {
         var constructorMember = getConstructorMember(members);
         if (constructorMember) {
           // Adding expando properties
           constructorMember._isConstructor = true;
           constructorMember._className = jsduckApi.name;
+          constructorMember._extends = jsduckApi.extends;
 
           var ternMember = getTernClass(jsduckApi.name, ternDef);
           var ternType = getTernType(constructorMember);
@@ -61,14 +62,15 @@
           hasConfig = constructorMember._hasConfig;
           if (hasConfig) {
             var configName = getConfigNameForClass(jsduckApi.name);
-            ternDef['!define'][configName] = config;
+            ternDef['!define'][configName] = config = {};
           }
           ternMember.prototype = {};
+          addParentClassPrototype(ternMember, config, constructorMember);
         }
         for (var i = 0; i < members.length; i++) {
           var member = members[i];
-          if (!isMemberPrivate(member)
-              || options["private"]) {
+          if (isOwnPropertyMember(member, jsduckApi) &&
+              (!isMemberPrivate(member) || options["private"])) {
             var ternMember = visitMember(member,
                 jsduckApi, ternDef);
             if (ternMember) {
@@ -111,6 +113,20 @@
       }
     }
 
+    function addParentClassPrototype(ternMember, config, jsdConstructorMember) {
+      var parentClass = jsdConstructorMember._extends;
+      if (parentClass && parentClass !== jsdConstructorMember._className) {
+        ternMember.prototype['!proto'] = parentClass + '.prototype';
+        if (config) {
+          config['!proto'] = getConfigNameForClass(parentClass);
+        }
+      }
+    }
+
+    function isOwnPropertyMember(member, jsduckApi) {
+      return [jsduckApi.name].concat(jsduckApi.mixins).indexOf(member.owner) !== -1;
+    }
+
     function isMemberChainable(member) {
       return getMemberProperty(member, "chainable");
     }
@@ -133,56 +149,63 @@
     }
 
     function getTernType(member) {
-      var memberType = member.type, memberParams = member.params, memberReturn = member.return;
-      if (!memberType) {
-        if (memberParams || memberReturn) {
-          var fnType = 'fn(';
-              // it's a function with parameters
-              if (memberParams) {
-                for (var i = 0; i < memberParams.length; i++) {
-                  var param = memberParams[i], name = param.name, optional = param.optional, type;
-                  // give a hint so that we can bind the Object type to the config properties of the class
-                  // in getTernTypesFromString
-                  if (member._isConstructor) {
-                    param._constructorParamFor = member._className;
-                  }
-                  type = getTernType(param);
-                  member._hasConfig = member._hasConfig || param._isConfig;
-                  if (i > 0)
-                    fnType += ', ';
-                  fnType += name;
-                  if (optional)
-                    fnType += '?';
-                  fnType += ': ';
-                  if (type) {
-                    fnType += type;
-                  } else {
-                    fnType += '?';
-                  }
-                }
-              }
-              fnType += ')';
-              if (!member._isConstructor) {
-                if (memberReturn) {
-                  var returnType = getTernType(memberReturn);
-                  if (!returnType) returnType = '?';
-                  fnType += ' -> ';
-                  fnType += returnType;
-                } else if (isMemberChainable(member)) {
-                  fnType += ' -> !this';
-                }
-              }
-              return fnType;
-        }
-        return null;
+      var
+        memberType = member.type,
+        isProbablyFunction = !memberType && (member.return || member.params);
+
+      if (memberType === 'Function' || isProbablyFunction) {
+        return getFunctionDefinition(member);
+      } else if (memberType) {
+        return getTernTypesFromString(member);
       }
-      return getTernTypesFromString(member);
+      return null;
     }
+
+    function getFunctionDefinition(member) {
+      var fnType = 'fn(', memberParams = member.params, memberReturn = member.return;
+      // it's a function with parameters
+      if (memberParams) {
+        for (var i = 0; i < memberParams.length; i++) {
+          var param = memberParams[i], name = param.name, optional = param.optional, type;
+          // give a hint so that we can bind the Object type to the config properties of the class
+          // in getTernTypesFromString
+          if (member._isConstructor) {
+            param._constructorParamFor = member._className;
+          }
+          type = getTernType(param);
+          member._hasConfig = member._hasConfig || param._isConfig;
+          if (i > 0)
+            fnType += ', ';
+          fnType += name;
+          if (optional)
+            fnType += '?';
+          fnType += ': ';
+          if (type) {
+            fnType += type;
+          } else {
+            fnType += '?';
+          }
+        }
+      }
+      fnType += ')';
+      if (!member._isConstructor) {
+        if (memberReturn) {
+          var returnType = getTernType(memberReturn);
+          if (!returnType) returnType = '?';
+          fnType += ' -> ';
+          fnType += returnType;
+        } else if (isMemberChainable(member)) {
+          fnType += ' -> !this';
+        }
+      }
+      return fnType;
+    }
+
 
     function getTernTypesFromString(member) {
       var ternType = null, types = member.type.split("/");
       for (var i = 0; i < types.length; i++) {
-        var t = getTernTypeFromString(types[i]);
+        var t = getTernTypeFromString(types[i], member);
         if (t) {
           if (ternType) {ternType+="|"} else {ternType = "";}
           // Be a bit more clever than JSDuck and guess when a config
@@ -198,7 +221,7 @@
       return ternType;
     }
 
-    function getTernTypeFromString(type) {
+    function getTernTypeFromString(type, member) {
       switch (type.toLowerCase().trim()) {
         case 'string':
           return 'string';
@@ -211,10 +234,12 @@
         case 'array':
           return '[?]';
         case 'function':
-          return 'fn()';
+          return member ? getFunctionDefinition(member): 'fn()';
         default:
           if (["'", '"'].indexOf(type.charAt(0)) !== -1) return "string";
-          if (type.length > 2 && type.substring(type.length -2, type.length) == "[]") return "[" + getTernTypeFromString(type.substring(0, type.length -2)) + "]";
+          // Transposing Type[] into [Type]
+          if (type.length > 2 && type.slice(-2) == "[]")
+            return "[" + getTernTypeFromString(type.slice(0, -2), member) + "]";
           return "+" + type;
       }
     }
