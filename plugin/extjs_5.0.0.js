@@ -8,42 +8,39 @@
   "use strict";
 
   tern.registerPlugin("extjs_5.0.0", function(server, options) {
-    server._extjs = {};
     postDefine();
-    return {
-      defs : defs,
-      passes: {
-        completion: function (file, query) {
-          var wordEnd = tern.resolvePos(file, query.end);
-          var objExpr = infer.findExpressionAround(file.ast, null, wordEnd, file.scope);
-          var callExpr = infer.findExpressionAround(file.ast, null, wordEnd, file.scope, 'CallExpression');
-          if (!isExtDefineCallExpression(callExpr, objExpr)) {
-            return;
-          }
-          var parentDef = getParentClassDefinition(objExpr);
-          var propNameToComplete = "";
-          var propExpr = infer.findExpressionAt(file.ast, null, wordEnd, file.scope, 'Property');
-          var propNode;
-          if (propExpr) {
-            propNode = propExpr.node;
-            propNameToComplete = propNode.key.name;
-          }
-          var completions = getCompletionsFor(query, propNameToComplete, parentDef);
-
-          //return null;
-          var start = propNode ? propNode.start : wordEnd;
-          var end = propNode ? propNode.end : wordEnd;
-          return {
-            start: tern.outputPos(query, file, start),
-            end: tern.outputPos(query, file, end),
-            isProperty: true,
-            isObjectKey: true,
-            completions: completions
-          };
-        }
-      }
-    };
+    server.on("completion", findCompletions);
+    server.addDefs(defs);
   });
+ 
+  function findCompletions(file, query) {
+    var wordEnd = tern.resolvePos(file, query.end);
+    var objExpr = infer.findExpressionAround(file.ast, null, wordEnd, file.scope);
+    var callExpr = infer.findExpressionAround(file.ast, null, wordEnd, file.scope, 'CallExpression');
+    if (!isExtDefineCallExpression(callExpr, objExpr)) {
+      return;
+    }
+    var parentDef = getParentClassDefinition(objExpr);
+    var propNameToComplete = "";
+    var propExpr = infer.findExpressionAt(file.ast, null, wordEnd, file.scope, 'Property');
+    var propNode;
+    if (propExpr) {
+      propNode = propExpr.node;
+      propNameToComplete = propNode.key.name;
+    }
+    var completions = getCompletionsFor(query, propNameToComplete, parentDef);
+
+    //return null;
+    var start = propNode ? propNode.start : wordEnd;
+    var end = propNode ? propNode.end : wordEnd;
+    return {
+      start: tern.outputPos(query, file, start),
+      end: tern.outputPos(query, file, end),
+      isProperty: true,
+      isObjectKey: true,
+      completions: completions
+    };    
+  }
 
   function isExtDefineCallExpression(callExpr, objExpr) {
     // check we're going to autocomplete direct properties

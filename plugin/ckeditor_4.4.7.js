@@ -8,10 +8,7 @@
   "use strict";
 
   tern.registerPlugin("ckeditor_4.4.7", function(server, options) {
-    server._ckeditor = {};
-    return {
-      defs : defs
-    };
+    server.addDefs(defs);
   });
 
   var defs = {
