@@ -86,6 +86,16 @@
     return properties && properties.indexOf(childExpr.node) !== -1;
   }
 
+  function getAliases() {
+    var extDefs = null;
+    infer.cx().parent.defs.some(function (curDefs) {
+      if (curDefs['!name'] === 'extjs') {
+        extDefs = curDefs;
+        return true;
+      }
+    });
+    return extDefs && extDefs['!data'] && extDefs['!data'].aliases;
+  }
 
 
   // **************************************************
@@ -133,11 +143,10 @@
     if (propNode.value !== thisExpr.node || propNode.key.name !== 'xtype') {
       return;
     }
-    var aliases = propExpr.state.metaData.aliases;
+    var aliases = getAliases();
     if (!aliases || !aliases.widget) {
       return;
     }
-
     var start = thisExpr.start;
     var end = thisExpr.end;
     return {
@@ -159,15 +168,11 @@
   }
 
   function getConfigClassDefForXtype(xtype, propExpr) {
-    var extDefs = null;
-    var aliases = propExpr.state.metaData.aliases;
-    if (!aliases) {
-      return
-    }
-    var widgets = aliases.widget;
-    if (!widgets) {
+    var aliases = getAliases();
+    if (!aliases || !aliases.widget) {
       return;
     }
+    var widgets = aliases.widget;
     var className = widgets[xtype];
     if (!className) {
       return;

@@ -11,3 +11,16 @@ Ext.create('Ext.grid.Panel', {
     }
   }]
 });
+Foo.Bar('Foo', function () {
+  Ext.define('Foo.bar', {
+    extend: 'Ext.grid.Panel',
+    columns: [{
+      xtype: 'check<complete:xtypeString2>',
+    }, {
+      xtype: 'checkcolumn',
+      td<complete:tdForCheckColumn>,
+      hidd<complete:hiddenForCheckColumn>
+      tb<complete:tbarForCheckColumnShouldNotBeCompleted>
+    }]
+  });
+});
