@@ -5,7 +5,7 @@ Ext.define('MyGrid', {
   sto<complete:storeForGrid>,
   rowLin<complete:rowLinesForGrid>,
   bodyStyle: function () {
-    var o = {};
-    o.<complete:propertyInFunction>
-  }
+    <complete:namesInFunction>
+  },
+  foo: sto<complete:propertyValue>
 });

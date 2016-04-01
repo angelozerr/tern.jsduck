@@ -16,14 +16,12 @@ describe('Ext.define completion', function () {
     expect(completor.completeAt('define'))
       .to.containSubset([completionFor('define', 'fn(className: string, data: ?, createdFn: fn())')]);
   });
+
   it('should list all properties', function () {
     expect(completor.completeAt('allForGrid'))
       .to.have.length.above(10);
   });
-  it('should not complete with config properties on dummy object in function', function () {
-    expect(completor.completeAt('propertyInFunction'))
-      .to.have.length(0);
-  });
+
   it('should complete sto->store', function () {
     expect(completor.completeAt('storeForGrid'))
       .to.containSubset([
@@ -36,5 +34,16 @@ describe('Ext.define completion', function () {
     // console.log(completor.completeAt('rowLinesForGrid'));
     expect(completor.completeAt('rowLinesForGrid'))
       .to.containSubset([completionFor('rowLines', 'bool')]);
+  });
+
+  it('should not complete with config properties in functions', function () {
+    expect(completor.completeAt('namesInFunction'))
+      .to.have.length(1)
+      .and.to.containSubset([completionFor('Ext', 'Ext')]);
+  });
+
+  it('should not complete with config properties on property values', function () {
+    expect(completor.completeAt('propertyValue'))
+      .to.have.length(0);
   });
 });

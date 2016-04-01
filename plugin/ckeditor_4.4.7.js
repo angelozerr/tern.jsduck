@@ -14,6 +14,9 @@
   var defs = {
  "!name": "ckeditor",
  "!define": {},
+ "!data": {
+  "aliases": {}
+ },
  "CKEDITOR": {
   "command": {
    "!doc": "<p>Represents a command that can be executed on an editor instance.</p>\n\n<pre><code>var command = new <a href=\"#!/api/CKEDITOR.command\" rel=\"CKEDITOR.command\" class=\"docClass\">CKEDITOR.command</a>( editor, {\n    exec: function( editor ) {\n        alert( editor.document.getBody().getHtml() );\n    }\n} );\n</code></pre>\n",
@@ -2406,6 +2409,13 @@
    }
   },
   "focusManager": {
+   "_": {
+    "!doc": "<p>Object used to store private stuff.</p>\n",
+    "blurDelay": {
+     "!type": "number",
+     "!doc": "<p>The delay (in milliseconds) to deactivate the editor when a UI DOM element has lost focus.</p>\n"
+    }
+   },
    "!doc": "<p>Manages the focus activity in an editor instance. This class is to be\nused mainly by UI element coders when adding interface elements that need\nto set the focus state of the editor.</p>\n\n<pre><code>var focusManager = new <a href=\"#!/api/CKEDITOR.focusManager\" rel=\"CKEDITOR.focusManager\" class=\"docClass\">CKEDITOR.focusManager</a>( editor );\nfocusManager.focus();\n</code></pre>\n",
    "!type": "fn(editor: +CKEDITOR.editor)",
    "prototype": {
@@ -2444,13 +2454,6 @@
     "unlock": {
      "!type": "fn() -> !this",
      "!doc": "<p>Restores the automatic focus management if <a href=\"#!/api/CKEDITOR.focusManager-method-lock\" rel=\"CKEDITOR.focusManager-method-lock\" class=\"docClass\">lock</a> is called.</p>\n"
-    }
-   },
-   "_": {
-    "!doc": "<p>Object used to store private stuff.</p>\n",
-    "blurDelay": {
-     "!type": "number",
-     "!doc": "<p>The delay (in milliseconds) to deactivate the editor when a UI DOM element has lost focus.</p>\n"
     }
    }
   },

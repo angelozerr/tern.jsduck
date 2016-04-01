@@ -52,23 +52,49 @@ describe('template util for Ext', function () {
       expect(tableTernDef.Ext.panel.Table.prototype)
         .to.have.property('!proto', 'Ext.panel.Panel.prototype');
     });
+  });
 
-    it('should generate !define for the configuration', function () {
-      expect(tableTernDef['!define']).to.have.property('Ext_panel_Table_cfg')
-        .that.is.an('object')
-        .and.that.has.property('disableSelection');
+  describe('for !define', function () {
+    describe('configs', function () {
+      var tableTernDef = templateUtil.generateTernDef('extjs', '5.1.1',
+        'Ext.panel.Table.json');
+
+      it('should generate the _*cfg object in !define', function () {
+        expect(tableTernDef['!define']).to.have.property('Ext_panel_Table_cfg')
+          .that.is.an('object')
+          .and.that.has.property('disableSelection');
+      });
+
+      it('should generate the *_cfg object in !define for the configuration coming from mixins',
+          function () {
+        expect(tableTernDef['!define'].Ext_panel_Table_cfg)
+          .to.have.property('lockedGridConfig'); // From Ext.grid.locking.Lockable
+      });
+
+      it('should generate complete config definitions in !define', function () {
+        expect(Object.keys(tableTernDef['!define'].Ext_panel_Table_cfg))
+          .to.have.length(44);
+      });
     });
 
-    it('should generate !define for the configuration coming from mixins',
-        function () {
-      expect(tableTernDef['!define'].Ext_panel_Table_cfg)
-        .to.have.property('lockedGridConfig'); // From Ext.grid.locking.Lockable
+  });
+
+  describe('for !data', function () {
+    describe('aliases', function () {
+      var fileUploadTernDef = templateUtil.generateTernDef('extjs', '5.1.1',
+        'Ext.form.field.File.json');
+
+      it('should generate the aliases definitions', function () {
+        expect(fileUploadTernDef['!data']).to.have.property('aliases')
+          .that.is.an('object')
+          .and.that.has.property('widget')
+          .that.deep.equals({
+              'filefield': 'Ext.form.field.File',
+              'fileuploadfield': 'Ext.form.field.File'
+          });
+      });
     });
 
-    it('should generate complete config definitions in !define', function () {
-      expect(Object.keys(tableTernDef['!define'].Ext_panel_Table_cfg))
-        .to.have.length(44);
-    });
   });
 
   describe('for types', function () {
