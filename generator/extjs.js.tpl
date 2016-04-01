@@ -243,6 +243,13 @@
         '!doc': 'Defines a class or override.'
       };
     }
+    for (var cfgName in defs['!define']) {
+      var def = defs['!define'][cfgName];
+      console.log(cfgName);
+      if (def.reference) {
+        console.log(def.reference);
+      }
+    }
   }
 
   var defs = <%= defs %>;
