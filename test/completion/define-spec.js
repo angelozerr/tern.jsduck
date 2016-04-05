@@ -14,7 +14,7 @@ chai.use(chaiSubset);
 describe('Ext.define completion', function () {
   it('should complete Ext.def->define', function () {
     expect(completor.completeAt('define'))
-      .to.containSubset([completionFor('define', 'fn(className: string, data: ?, createdFn: fn())')]);
+      .to.containSubset([completionFor('define', 'fn(className: string, data: ?, createdFn?: fn()) -> Ext.Base')]);
   });
 
   it('should list all properties', function () {
