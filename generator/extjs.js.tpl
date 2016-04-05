@@ -8,7 +8,6 @@
   "use strict";
 
   tern.registerPlugin("extjs_<%= version %>", function(server, options) {
-    postDefine();
     server.on("completion", findCompletions);
     server.addDefs(defs);
   });
@@ -234,15 +233,6 @@
       return false;
     }
     return true;
-  }
-
-  function postDefine() {
-    if (!defs.Ext.define) {
-      defs.Ext.define = {
-        '!type': "fn(className: string, data: ?, createdFn: fn()) -> +Ext.Base",
-        '!doc': 'Defines a class or override.'
-      };
-    }
   }
 
   var defs = <%= defs %>;
