@@ -73,7 +73,7 @@ describe('template util for Ext', function () {
 
       it('should generate complete config definitions in !define', function () {
         expect(Object.keys(tableTernDef['!define'].Ext_panel_Table_cfg))
-          .to.have.length(44);
+          .to.have.length(46);
       });
     });
 
