@@ -25,7 +25,7 @@ module.exports = function(grunt) {
       },
       completion: {
         options: {
-          files: ['test/completion/*-spec.js']
+          files: ['test/completion/*/*-spec.js']
         }
       }
     },
@@ -35,11 +35,11 @@ module.exports = function(grunt) {
         tasks: 'test:unit'
       },
       testcompletion: {
-        files: ['test/completion/*-spec.js', 'generator/*.{js,tpl}'],
+        files: ['test/completion/*/*-spec.js', 'generator/*.{js,tpl}'],
         tasks: 'test:completion'
       },
       testcompletionwithbuild: {
-        files: ['test/completion/*-spec.js', 'generator/*.{js,tpl}'],
+        files: ['test/completion/*/*-spec.js', 'generator/*.{js,tpl}'],
         tasks: ['template', 'test:completion']
       },
       testall: {

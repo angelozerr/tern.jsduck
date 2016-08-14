@@ -107,4 +107,14 @@ describe('template util for Ext', function () {
             'string|fn(button: +Ext.button.Button, e: +Ext.event.Event)');
     });
   });
+
+  describe('issue11', function () {
+    var extDef = templateUtil.generateTernDef('extjs', '4.2.1',
+        'Ext.json');
+    it('should generate correct definition for Ext.destroy', function () {
+      expect(extDef.Ext)
+        .to.have.property('destroy')
+        .that.has.property('!type', 'fn(args: +Ext.dom.Element|+Ext.util.Observable|[+Ext.dom.Element]|[+Ext.util.Observable]) -> !this');
+    });
+  });
 });

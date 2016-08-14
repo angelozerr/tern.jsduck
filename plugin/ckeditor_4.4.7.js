@@ -680,7 +680,7 @@
       "!doc": "<p>Hides this element (sets <code>display: none</code>).</p>\n\n<pre><code>var element = CKEDITOR.document.getById( 'myElement' );\nelement.hide();\n</code></pre>\n"
      },
      "is": {
-      "!type": "fn(name: +String...|?) -> bool",
+      "!type": "fn(name: string|?) -> bool",
       "!doc": "<p>Checks if the element name matches the specified criteria.</p>\n\n<pre><code>var element = new CKEDITOR.element( 'span' );\nalert( element.is( 'span' ) );          // true\nalert( element.is( 'p', 'span' ) );     // true\nalert( element.is( 'p' ) );             // false\nalert( element.is( 'p', 'div' ) );      // false\nalert( element.is( { p:1,span:1 } ) );  // true\n</code></pre>\n"
      },
      "isBlockBoundary": {
@@ -3560,7 +3560,7 @@
     "!doc": "<p>Buffers <code>input</code> events (or any <code>input</code> calls)\nand triggers <code>output</code> not more often than once per <code>minInterval</code>.</p>\n\n<pre><code>var buffer = <a href=\"#!/api/CKEDITOR.tools-method-eventsBuffer\" rel=\"CKEDITOR.tools-method-eventsBuffer\" class=\"docClass\">CKEDITOR.tools.eventsBuffer</a>( 200, function() {\n    console.log( 'foo!' );\n} );\n\nbuffer.input();\n// 'foo!' logged immediately.\nbuffer.input();\n// Nothing logged.\nbuffer.input();\n// Nothing logged.\n// ... after 200ms a single 'foo!' will be logged.\n</code></pre>\n\n<p>Can be easily used with events:</p>\n\n<pre><code>var buffer = <a href=\"#!/api/CKEDITOR.tools-method-eventsBuffer\" rel=\"CKEDITOR.tools-method-eventsBuffer\" class=\"docClass\">CKEDITOR.tools.eventsBuffer</a>( 200, function() {\n    console.log( 'foo!' );\n} );\n\neditor.on( 'key', buffer.input );\n// Note: There is no need to bind buffer as a context.\n</code></pre>\n"
    },
    "extend": {
-    "!type": "fn(target: ?, source: +Object..., overwrite?: bool, properties?: ?) -> ?",
+    "!type": "fn(target: ?, source: ?, overwrite?: bool, properties?: ?) -> ?",
     "!doc": "<p>Copies the properties from one object to another. By default, properties\nalready present in the target object <strong>are not</strong> overwritten.</p>\n\n<pre><code>// Create the sample object.\nvar myObject = {\n    prop1: true\n};\n\n// Extend the above object with two properties.\n<a href=\"#!/api/CKEDITOR.tools-method-extend\" rel=\"CKEDITOR.tools-method-extend\" class=\"docClass\">CKEDITOR.tools.extend</a>( myObject, {\n    prop2: true,\n    prop3: true\n} );\n\n// Alert 'prop1', 'prop2' and 'prop3'.\nfor ( var p in myObject )\n    alert( p );\n</code></pre>\n"
    },
    "fixDomain": {
@@ -3660,7 +3660,7 @@
     "!doc": "<p>Removes spaces from the start and the end of a string. The following\ncharacters are removed: space, tab, line break, line feed.</p>\n\n<pre><code>alert( <a href=\"#!/api/CKEDITOR.tools-method-trim\" rel=\"CKEDITOR.tools-method-trim\" class=\"docClass\">CKEDITOR.tools.trim</a>( '  example ' ); // 'example'\n</code></pre>\n"
    },
    "tryThese": {
-    "!type": "fn(fn: +Function...) -> +Mixed",
+    "!type": "fn(fn: fn()) -> +Mixed",
     "!doc": "<p>Returns the first successfully executed return value of a function that\ndoes not throw any exception.</p>\n"
    },
    "writeCssText": {

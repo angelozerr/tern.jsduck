@@ -256,6 +256,8 @@
           return member ? getFunctionDefinition(member): 'fn()';
         default:
           if (["'", '"'].indexOf(type.charAt(0)) !== -1) return "string";
+          if (type.indexOf('...', type.length - 3) !== -1)
+            return getTernTypeFromString(type.slice(0, -3));
           // Transposing Type[] into [Type]
           if (type.length > 2 && type.slice(-2) == "[]")
             return "[" + getTernTypeFromString(type.slice(0, -2), member) + "]";

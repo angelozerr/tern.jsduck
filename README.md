@@ -95,8 +95,11 @@ See also `Gruntfile.js` for the exhaustive list of tasks.
 Files in `test/unit/` contain unit tests for the JSDuck generator.
 
 #### Completion tests
-Files in `test/completion/` contain tests which sends requests to a real Tern server running with a set of plugins.
 
-A test in this folder creates a `Completor` instance (see `test/lib/util.js`) and provides it a fixture in `test/completion/fixtures/`.
+`test/completion` include completion test for supported libraries and versions (not every of them are covered by these tests at the moment, only ExtJS 5.1.1 and 4.2.1).
+
+More precisely, files in `test/completion/` contain tests which sends requests to a real Tern server running with a set of plugins.
+
+A test in this folder creates a `Completor` instance (see `test/lib/util.js`) and provides it a fixture in `test/completion/*/fixtures/`.
 
 Fixtures are JS files including locations to auto-complete. The locations are specified using this syntax: `<complete:someName>` where `someName` can be provided to `completor.completeAt()`. You may take a look at existing tests for more information.
