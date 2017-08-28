@@ -61,7 +61,7 @@
       var parentDefinitionName = className.replace(/\./g, '_') + '_cfg';
       classConfigDef = cx.definitions.extjs[parentDefinitionName];
     } else {
-      configDef = cx.definitions.Ext_cfg;
+      classConfigDef = cx.definitions.Ext_cfg;
     }
     return classConfigDef;
   }
